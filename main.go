@@ -10,12 +10,14 @@ import (
 
 const (
 	port = "8080"
+	egpInit = "<%egp"
+	egpDeInit = "%>"
 )
 
 var (
 	suppNoExt = []string{
 		".html",
-		".egp",
+		".elh",
 	}
 )
 
@@ -57,7 +59,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if ext == ".egp" {
+	if ext == ".elh" {
 		
 	}
 

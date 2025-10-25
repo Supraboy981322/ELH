@@ -1,7 +1,8 @@
-# EGP
+# ELH (Embed Languages in HTML)
 
 ---
 
-Don't worry about it. Not important.
+>[!WARNING]
+>HIGHLY EXPERIMENTAL AND EARLY DEVELOPMENT!
 
-<sub>yet (hopefully)</sub>
+Freely embed various programming languages into HTML; like PHP, but without PHP.

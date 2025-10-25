@@ -5,8 +5,8 @@
     </head>
     <body>
         <h1>egp</h1>
-        <%egp
+        <$egp
             return "foo"
-        %>
+        $>
     </body>
 </html>
