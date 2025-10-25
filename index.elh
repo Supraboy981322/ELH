@@ -5,8 +5,8 @@
     </head>
     <body>
         <h1>egp</h1>
-        <$egp
-            return "foo"
+        <$bash
+            echo "Neat. It worked."
         $>
     </body>
 </html>

@@ -71,14 +71,15 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var err error	
 	var result string
 	//if the file is elh, parse it
 	if ext == ".elh" {
-		input := `Hello <$py print("Alice") $>! 
-JS: <$js console.log("hi from node") $> Done.
-Bash: <$bash echo "echo \"bash\"" $>`
-		result, err = Render(input)
+		fileByte, err := os.ReadFile(file)
+		if err != nil {
+			errOut("read file", err)
+		}
+		fileStr := string(fileByte)
+		result, err = Render(fileStr)
 		if err != nil {
 			errOut("elh failed:  %v", err)
 		}
