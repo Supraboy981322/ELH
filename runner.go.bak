@@ -1,0 +1,178 @@
+package main
+
+import (
+	"fmt"
+	"io"
+	"os"
+	"os/exec"
+	"time"
+	"bytes"
+	"context"
+	"strings"
+)
+
+type ExternalRunner struct {
+	CmdName string         //binary that runs code 
+	Args    []string       //default args
+	Timeout time.Duration  //command timeout
+	Env []string           //nil to use os.Environ()
+	WorkDir string         //working dir
+}
+
+func (r *ExternalRunner) Run(code string) (string, string, error) {
+	ctx := context.Background() 
+	if r.Timeout > 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, r.Timeout)
+		defer cancel()
+	}
+
+	//create temporary file
+	tmp, err := os.CreateTemp("", "snippet-*.tmp")
+	if err != nil {
+		errRun("create temporary file", err)
+	}
+
+	tmpName := tmp.Name()
+
+	//cleanup then close once fn ends
+	defer func() {
+		tmp.Close()
+		_ = os.Remove(tmpName)
+	}()
+
+	//write code into temporary file
+	_, err = io.WriteString(tmp, code)
+	if err != nil {
+		return errRun("write to temporary file", err)
+	}
+
+	//make sure the file is available
+	err = tmp.Sync()
+	if err != nil {
+		return errRun("sync temporary file", err)
+	}
+
+	//close the file
+	err = tmp.Close()
+	if err != nil {
+		return errRun("close temporary file", err)
+	}
+
+	//add provided args
+	args := append([]string{}, r.Args...)
+	//add file name to args
+	args = append(args, tmpName)
+	//create command
+	cmd := exec.CommandContext(ctx, r.CmdName, args...)
+	
+	//use working dir provided if exists
+	if r.WorkDir != "" {
+		cmd.Dir = r.WorkDir
+	}
+
+	//use environment provided if exists
+	if r.Env != nil {
+		cmd.Env = r.Env
+	}
+
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err = cmd.Run()
+
+	stderrStr := stderr.String()
+	stdoutStr := stdout.String()
+	
+	//context exceeds timeout, classify as such
+	if ctx.Err() == context.DeadlineExceeded {
+		errRet := fmt.Errorf("exec exceeded timeout")
+		return stdoutStr, stderrStr, errRet 
+	}
+
+	if err != nil {
+		errRet := fmt.Errorf("exec:  %w", err)
+		return stdoutStr, stderrStr, errRet 
+	}
+
+	
+	return stdoutStr, stderrStr, nil 
+}
+
+//search for tags (ex: <$go ... $>) then execute code
+//  with runner and replace it with stdout 
+func parseAndRun(src string, registry map[string]Runner) (string, error) {
+	var out strings.Builder
+	i := 0
+	for {
+		start := strings.Index(src[i:], "<$")
+		if start < 0 {
+			out.WriteString(src[i:])
+			break
+		}
+
+		start += 1
+		out.WriteString(src[i:start])
+
+		//search for language declaration
+		j := start + 2
+		k := j
+		for k < len(src) {
+			c := src[k]
+			if (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') {
+				k++
+				continue
+			}
+			break
+		}
+		
+		//if no language declared , don't touch it
+		if k == j {
+			out.WriteString("<$")
+			i = j
+			continue
+		}
+
+		language := src[j:k]
+
+		//for single space between declaring language and code
+		codeStart := k
+		if codeStart < len(src) && src[codeStart] == ' ' {
+			codeStart++
+		}
+
+		endRel := strings.Index(src[codeStart:], "$>")
+		if endRel < 0 {
+			//if there's no closing tag, treat as literal
+			out.WriteString(src[start:])
+			break
+		}
+
+		end := codeStart + endRel
+		code := src[codeStart:end]
+
+		r, ok := registry[strings.ToLower(language)]
+		if !ok {
+			errVal := fmt.Errorf("unknown language tag: %s", language)
+			return "", errVal
+		}
+
+		stdout, stderr, err := r.Run(code)
+		if err != nil {
+			errVal := fmt.Errorf("runnder %s failed:  %w; stderr=%s", language, err, stderr)
+			return "", errVal
+		}
+
+		out.WriteString(stdout)
+
+		//skip '$>'
+		i = end + 2 
+	}
+
+	return out.String(), nil
+}
+
+func errRun(str string, err error) (string, string, error) {
+	return "", "", fmt.Errorf("%s:  %w", str, err)
+}

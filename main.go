@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"path/filepath"
 	"os"
@@ -9,48 +10,59 @@ import (
 )
 
 const (
-	port = "8080"
-	egpInit = "<%egp"
-	egpDeInit = "%>"
+	port = "8080"	
+	elhDeInit = "$>"
 )
 
 var (
+	//for urls with no file format 
 	suppNoExt = []string{
 		".html",
 		".elh",
 	}
 )
 
+type Runner interface {
+	Run(code string) (stdout string, stderr string, err error)
+}
+
+
 func main() {
 	http.HandleFunc("/", httpHandler)
 
-	panic(http.ListenAndServe(":"+port, nil))
+	errOut("http", http.ListenAndServe(":"+port, nil))
 }
 
+
 func httpHandler(w http.ResponseWriter, r *http.Request) {
+	//check method type
 	switch r.Method {
-	case http.MethodGet:
+	case http.MethodGet: //run fn for GET
 		fmt.Printf("GET:  %s\n", r.URL.Path)
 		getHandler(w, r)
-	default:
+	default: //only GET is supported at the moment
 		fmt.Printf("attempted bad method:  %s\n", r.Method)
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
 func getHandler(w http.ResponseWriter, r *http.Request) {
+	//get the requested file
 	file := r.URL.Path
 	if file ==  "/" {
 		file = "index"
 	}
-	ext := filepath.Ext(file)
-	fmt.Println(ext)
-	if ext == "" {
+	
+	//get the extension of the requested file
+	ext := filepath.Ext(file)	
+	if ext == "" { //if there is no ext
+		//check against list of ext which can
+		//  have no ext in url
 		for i := 0; i < len(suppNoExt); i++ {
 			checkFile := fmt.Sprintf("%s%s", file, suppNoExt[i])
 			_, err := os.Stat(checkFile)
-			if err == nil {
-				file = checkFile
+			if err == nil { //if the file exists
+				file = checkFile //assume it's the correct one
 				ext = suppNoExt[i]
 				break
 			} else if !errors.Is(err, os.ErrNotExist) {
@@ -59,17 +71,30 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	var err error	
+	var result string
+	//if the file is elh, parse it
 	if ext == ".elh" {
-		
+		input := `Hello <$py print("Alice") $>! 
+JS: <$js console.log("hi from node") $> Done.`
+		result, err = Render(input)
+		if err != nil {
+			errOut("elh failed:  %v", err)
+		}
+	} else {
+		result = "foo"
 	}
 
+	//log request
 	fmt.Printf("\nreq:  %s\n", file)
 
-	fmt.Fprintf(w, "foo")
+	fmt.Fprintf(w, result)
 }
 
+//for errors
 func errOut(str string, err error) {
 	errStr := fmt.Sprintf("\n\n%s:\n%v\n", str, err)
 	errVal := errors.New(errStr)
-	panic(errVal)
+	log.Fatal(errVal)
+	os.Exit(1)
 }
