@@ -51,6 +51,8 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 	file := r.URL.Path
 	if file ==  "/" {
 		file = "index"
+	} else {
+		file = file[1:]
 	}
 	
 	//get the extension of the requested file
@@ -71,26 +73,35 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var result string
-	//if the file is elh, parse it
-	if ext == ".elh" {
+	if fileExists(file) {
 		fileByte, err := os.ReadFile(file)
 		if err != nil {
 			errOut("read file", err)
 		}
 		fileStr := string(fileByte)
-		result, err = Render(fileStr)
-		if err != nil {
-			errOut("elh failed:  %v", err)
+		var result string
+		//if the file is elh, parse it
+		if ext == ".elh" {
+			result, err = Render(fileStr)
+			if err != nil {
+				errOut("elh failed:  %v", err)
+			}
+		} else {
+			result = fileStr
 		}
+	
+		//log request
+		fmt.Printf("\nreq:  %s\n", file)
+	
+		fmt.Fprintf(w, result)
 	} else {
-		result = "foo"
+		http.Error(w, "404 forbidden", http.StatusForbidden)
 	}
+}
 
-	//log request
-	fmt.Printf("\nreq:  %s\n", file)
-
-	fmt.Fprintf(w, result)
+func fileExists(filePath string) bool {
+	_, err := os.Stat(filePath)
+	return !errors.Is(err, os.ErrNotExist)
 }
 
 //for errors
