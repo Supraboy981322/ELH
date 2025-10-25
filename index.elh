@@ -5,8 +5,8 @@
     </head>
     <body>
         <h1>elh</h1>
-        <$go
-            fmt.Println("Neat. It worked.")
+        <$Java
+            System.out.println("java works");
         $>
     </body>
 </html>
