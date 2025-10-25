@@ -5,8 +5,8 @@
     </head>
     <body>
         <h1>elh</h1>
-        <$bash
-            echo "Neat. It worked."
+        <$go
+            fmt.Println("Neat. It worked.")
         $>
     </body>
 </html>
