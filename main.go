@@ -76,7 +76,8 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 	//if the file is elh, parse it
 	if ext == ".elh" {
 		input := `Hello <$py print("Alice") $>! 
-JS: <$js console.log("hi from node") $> Done.`
+JS: <$js console.log("hi from node") $> Done.
+Bash: <$bash echo "echo \"bash\"" $>`
 		result, err = Render(input)
 		if err != nil {
 			errOut("elh failed:  %v", err)
