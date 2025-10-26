@@ -29,7 +29,7 @@ type Runner interface {
 
 func main() {
 	http.HandleFunc("/", httpHandler)
-
+	fmt.Printf("listening on port:  %s\n", port)
 	errOut("http", http.ListenAndServe(":"+port, nil))
 }
 
@@ -84,7 +84,9 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		if ext == ".elh" {
 			result, err = Render(fileStr)
 			if err != nil {
-				errOut("elh failed:  %v", err)
+				errOut("elh failed;", err)
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
 			}
 			w.Header().Set("Content-Type", "text/html")
 		} else {
@@ -109,6 +111,5 @@ func fileExists(filePath string) bool {
 func errOut(str string, err error) {
 	errStr := fmt.Sprintf("\n\n%s:\n%v\n", str, err)
 	errVal := errors.New(errStr)
-	log.Fatal(errVal)
-	os.Exit(1)
+	log.Println(errVal)
 }

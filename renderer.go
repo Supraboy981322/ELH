@@ -46,12 +46,9 @@ func (r *ExternalRunner) Run(code string) (string, string, error) {
 		fileName := strings.ReplaceAll(tmpName, "/tmp/", "")
 		class := fileName
 		code = fmt.Sprintf("public class %s {\n%s\n}\n", class, code)
-		fmt.Println("appending Java header")
 	default:
 		fmt.Printf("")
 	}
-
-	fmt.Printf(code)
 
 	//write code into temporary file
 	_, err = io.WriteString(tmp, code)
