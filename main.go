@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"os"
 	"errors"
+	"bytes"
+	"time"
 )
 
 const (
@@ -16,8 +18,8 @@ const (
 var (
 	//for urls with no file format 
 	suppNoExt = []string{
-		".html",
 		".elh",
+		".html",
 	}
 )
 
@@ -48,12 +50,13 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 func getHandler(w http.ResponseWriter, r *http.Request) {
 	//get the requested file
 	file := r.URL.Path
-	if file ==  "/" {
+	if file == "/" {
 		file = "index"
+	} else if file[len(file)-1:] ==  "/" {
+		file = fmt.Sprintf("%sindex", string(file[1:]))
 	} else {
 		file = file[1:]
 	}
-	
 	//get the extension of the requested file
 	ext := filepath.Ext(file)	
 	if ext == "" { //if there is no ext
@@ -61,6 +64,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		//  have no ext in url
 		for i := 0; i < len(suppNoExt); i++ {
 			checkFile := fmt.Sprintf("%s%s", file, suppNoExt[i])
+			fmt.Println(checkFile)
 			_, err := os.Stat(checkFile)
 			if err == nil { //if the file exists
 				file = checkFile //assume it's the correct one
@@ -71,7 +75,6 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-
 	if fileExists(file) {
 		fileByte, err := os.ReadFile(file)
 		if err != nil {
@@ -90,12 +93,12 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintln(w, result)
 		} else {
-			http.ServeContent(w, r, file, time.Now(), bytes.NewReader(fileStr))
+			fileReader := bytes.NewReader(fileByte)
+			http.ServeContent(w, r, file, time.Now(), fileReader)
 		}
 	
 		//log request
-		fmt.Printf("\nreq:  %s\n", file)
-	
+		fmt.Printf("\nreq:  %s\n", file)	
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
 	}
@@ -105,6 +108,7 @@ func fileExists(filePath string) bool {
 	_, err := os.Stat(filePath)
 	return !errors.Is(err, os.ErrNotExist)
 }
+
 
 //for errors
 func errOut(str string, err error) {
