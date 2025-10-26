@@ -4,14 +4,16 @@
         <title>egp</title>
     </head>
     <body>
-        <h1><$JS console.log("elh"); $></h1>
-        <p>Files in current directory</p>
-        <div>
+        <h1><$JS console.log("ELH"); $></h1>
+        <h3>Examples:</h3>
+        <p>Number: <$Bash ls examples | wc -l $></p>
+        <ul>
             <$BaSh
-            for file in $(ls); do
-                echo "<p>$file</p>"
-            done
+                files="$(ls examples)"
+                for file in $(ls examples); do
+                        echo "<li><a href=\"examples/$file\">$file</a></li>"
+                done
             $>
-        </p>
+        </ul>
     </body>
 </html>
