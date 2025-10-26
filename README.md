@@ -49,6 +49,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - Python3
 - Markdown
   - Marked
+- Lua
+  - Lua
 
 ---
 
