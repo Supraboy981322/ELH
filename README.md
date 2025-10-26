@@ -32,3 +32,31 @@ Freely embed various programming languages into HTML; like PHP, but without PHP.
   </body>
   ```
 - [more examples](https://github.com/Supraboy981322/ELH/tree/master/examples)
+
+---
+
+### TODO
+
+~~-----------~~  ***`functionality`***  ~~-----------~~
+- [x] HTTP server
+- [x] Parsing `.elh` for language tags
+- [x] Basic definitions for language tags
+- [x] Executing code in language tags
+- [ ] 
+- [ ] Injecting formatting requirements for various languages 
+- [ ] Mime types for files other-than `.elh`
+- [ ] Passing headers and params
+- [ ] imports
+- [ ] user-defined languages (?)
+~~-------------~~  ***`languages`***  ~~-------------~~
+- [ ] Go
+- [x] Python
+- [x] Bash
+- [x] Java
+- [ ] R
+- [x] JavaScript
+- [ ] Markdown
+- [ ] Ruby
+- [ ] PHP
+- [ ] Perl
+- [ ] Lua 
