@@ -1,7 +1,7 @@
 <!DOCTYPE html
 <html lang="en">
     <head>
-        <title>ELH - Java example</title>
+        <title>ELH - Bash example</title>
     <body>
         <h1>ELH Bash example</h1>
         <p>Runs the following Bash script on the server, similar to PHP</p>
