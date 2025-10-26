@@ -30,7 +30,13 @@ func DefaultRegistry() map[string]Runner {
 			Args:    []string{"--source", "23"},
 			Timeout: 5 * time.Second,
 			Env:     os.Environ(),
-		}, 
+		},
+		"md": &ExternalRunner{
+			CmdName: "marked",
+			Args:    []string{"-i"},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
 	}
 }
 

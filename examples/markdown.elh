@@ -1,0 +1,80 @@
+<!DOCTYPE html
+<html lang="en">
+    <head>
+        <title>ELH - Bash example</title>
+    </head> 
+    <style>
+        red {
+            color: red;
+        }
+        blu {
+            color: cyan;
+        }
+        ora {
+            color: orange;
+        }
+        pin {
+            color: magenta;
+        }
+        gre {
+            color: green;
+        }
+        yel {
+            color: yellow;
+        }
+
+        code {
+            background-color: black;
+            color: orange;
+            padding: 0.25em;
+            border-radius: 0.25em;
+        }
+
+        pre:has(code) {
+            background-color: #151515;
+            color: lime;
+            padding: 0.5em 0.75em;
+            border-radius: 0.35em;
+            border: 0.1em solid #333333;
+            width: 50vw;
+            code {
+                color: unset;
+                background-color: transparent;
+                padding: unset;
+            }
+        }
+    </style>
+    <body>
+        <h1>ELH Markdown example</h1>
+        <p>Renders the following Markdown on the server, similar to PHP</p>
+<pre><code><pin># Foo</pin>
+<gre>## bar</gre>
+<yel>### baz</yel>
+<blu>- qux</blu>
+<blu>- quux</blu>
+  <ora>- quuz</ora>
+
+<pin>`corge`</pin>
+
+<red>```</red>
+<red>grault</red>
+<red>```</red></code></pre>
+    
+        <p>The output:</p>
+        <$md
+# Foo
+## bar
+### baz
+- qux
+- quux
+  - quuz
+
+`corge`
+
+```
+grault
+```
+          $>
+    </body>
+</html>
+
