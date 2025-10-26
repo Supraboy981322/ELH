@@ -1,7 +1,5 @@
 # ELH (Embed Languages in HTML)
 
----
-
 >[!WARNING]
 >HIGHLY EXPERIMENTAL AND EARLY DEVELOPMENT!
 
