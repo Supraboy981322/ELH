@@ -94,7 +94,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		//log request
 		fmt.Printf("\nreq:  %s\n", file)
 	
-		fmt.Fprintf(w, result)
+		fmt.Fprintln(w, result)
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
 	}

@@ -7,17 +7,17 @@
         <p>Runs the following Java code on the server, similar to PHP</p>
         <pre>
             <code>
-                public static void main(String[] args) {
-                    System.out.println("&lt;p&gt;");
-                    for (int num = 100, i = 1; num <= 1000; num++) {
-                        if (num % 5 == 0 && num % 6 == 0) { 
-                            String whiteSpace = (i % 10 == 0) ? "&lt;/p&gt;&lt;p&gt;" : "  ";
-                            System.out.printf("%d%s", num, whiteSpace);
-                            i++;
-                        }
-                    }
-                    System.out.println("&lt;/p&gt;");
-                }
+    public static void main(String[] args) {
+        System.out.println("&lt;p&gt;");
+        for (int num = 100, i = 1; num <= 1000; num++) {
+            if (num % 5 == 0 && num % 6 == 0) { 
+                String whiteSpace = (i % 10 == 0) ? "&lt;/p&gt;&lt;p&gt;" : "  ";
+                System.out.printf("%d%s", num, whiteSpace);
+                i++;
+            }
+        }
+        System.out.println("&lt;/p&gt;");
+    }
             </code>
         </pre>
         <p>The output:</p>
