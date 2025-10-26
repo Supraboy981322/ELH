@@ -88,14 +88,14 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
 			}
 			w.Header().Set("Content-Type", "text/html")
+			fmt.Fprintln(w, result)
 		} else {
-			result = fileStr
+			http.ServeContent(w, r, file, time.Now(), bytes.NewReader(fileStr))
 		}
 	
 		//log request
 		fmt.Printf("\nreq:  %s\n", file)
 	
-		fmt.Fprintln(w, result)
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
 	}
