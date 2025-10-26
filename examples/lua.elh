@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - Lua example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <h1>ELH Lua example</h1>
+        <p>Runs the following Lua script on the server, similar to PHP</p>
+        <pre><code>
+    <pur>local</pur> count <gra>=</gra> <ora>1</ora>
+    <pur>while</pur> count <gra>&lt;=</gra> <ora>5</ora> <pur>do</pur>
+        <ora>print</ora><dar>(</dar><gre>"&lt;p&gt;Count:"</gre><dar>,</dar> count<dar>,</dar> <gre>"&lt;/p&gt;"</gre><dar>)</dar>
+        count <gra>=</gra> count <gra>+</gra> <ora>1</ora>
+    <pur>end</pur>
+        </code></pre>
+        <h3>The output:</h3>
+        <$lua
+            local count = 1
+            while count <= 5 do
+                print("<p>Count:", count, "</p>")
+                count = count + 1
+            end
+        $>
+    </body>
+</html>
