@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - Brainfuck example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <h1>ELH Brainfuck example</h1>
+        <p>Runs the following Brainfuck script on the server, similar to PHP</p>
+        <pre><code>
+    <red>&gt;</red><blu>+++++++++</blu><dar>[</dar><red>&lt;</red><blu>++++++++</blu><red>&gt;</red><pur>-</pur><dar>]</dar><red>&lt;</red>.<red>&gt;</red><blu>+++++++</blu><dar>[</dar><red>&lt;</red><blu>++++</blu><red>&gt;</red></blu><pur>-</pur><dar>]</dar><red>&lt;</red><blu>+</blu>.<blu>+++++++</blu>..<blu>+++</blu>.<dar>[</dar><pur>-</pur><dar>]</dar>
+    <red>&gt;</red><blu>++++++++</blu><dar>[</dar><red>&lt;</red><blu>++++</blu><red>&gt;</red><pur>-</pur><dar>]</dar> <red>&lt</red>.<red>&gt;</red><blu>+++++++++++</blu><dar>[</dar><red>&lt;</red><blu>++++++++</blu><red>&gt;</red><pur>-</pur><dar>]</dar><red>&lt;</red><pur>-</pur>.<pur>--------</pur>.<blu>+++</blu>
+    .<pur>------</pur>.<pur>--------</pur>.<dar>[</dar><pur>-</pur><dar>]></dar><blu>++++++++</blu><dar>[</dar><red>&lt;</red><blu>++++</blu><red>&gt;</red><pur>-</pur> <dar>]</dar><red>&lt;</red><blu>+</blu>.<dar>[</dar><pur>-</pur><dar>]</dar><blu>++++++++++</blu>.
+        </code></pre>
+        <h3>The output:</h3>
+        <$bf
+>+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]
+>++++++++[<++++>-] <.>+++++++++++[<++++++++>-]<-.--------.+++
+.------.--------.[-]>++++++++[<++++>- ]<+.[-]++++++++++.
+        $>
+    </body>
+</html>
+
