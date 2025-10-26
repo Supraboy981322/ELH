@@ -10,7 +10,7 @@ Freely embed various programming languages into HTML; like PHP, but without PHP.
 ---
 
 known working languages
-- Java
+- Java (Java 23)
 - Python
 - Bash
 - JavaScript (tested with Bun) 
