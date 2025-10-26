@@ -3,8 +3,8 @@
     <head>
         <title>ELH - Java example</title>
     <body>
-        <h1>ELH Java example</h1>
-        <p>Runs the following code on the server, similar to PHP</p>
+        <h1>ELH <$ foo="test" $> example</h1>
+        <p>Runs the following code on the server, similar to PHP <$ echo "$foo" $></p>
         <pre>
             <code>
                 public static void main(String[] args) {
