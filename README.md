@@ -55,7 +55,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] Java
 - [ ] R
 - [x] JavaScript
-- [ ] Markdown
+- [x] Markdown
 - [ ] Ruby
 - [ ] PHP
 - [ ] Perl
