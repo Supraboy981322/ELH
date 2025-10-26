@@ -22,11 +22,13 @@ Freely embed various programming languages into HTML; like PHP, but without PHP.
   <!DOCTYPE html
   <body>
     <h1>files</h1>
-    <$bash
-      for file in $(ls); do
-        printf "<p>$file</p>\n"
-      done
-    $>
+    <ul>
+      <$bash
+        for file in $(ls); do
+          printf "<li>$file</li>\n"
+        done
+      $>
+    </ul>
   </body>
   ```
 - [more examples](https://github.com/Supraboy981322/ELH/tree/master/examples)
