@@ -28,7 +28,7 @@ func (r *ExternalRunner) Run(code string) (string, string, error) {
 	}
 
 	//create temporary file
-	tmp, err := os.CreateTemp("", "snippet-*.tmp")
+	tmp, err := os.CreateTemp("", "snippet*")
 	if err != nil {
 		errRun("create temporary file", err)
 	}
@@ -40,6 +40,19 @@ func (r *ExternalRunner) Run(code string) (string, string, error) {
 		tmp.Close()
 		_ = os.Remove(tmpName)
 	}()
+
+	switch (r.CmdName) {
+	case "java":
+		fileName := strings.ReplaceAll(tmpName, "/tmp/", "")
+//		class := strings.Split(fileName, ".")[0]
+		class := fileName
+		code = fmt.Sprintf("public class %s {\n%s\n}\n", class, code)
+		fmt.Println("appending Java header")
+	default:
+		fmt.Printf("")
+	}
+
+	fmt.Printf(code)
 
 	//write code into temporary file
 	_, err = io.WriteString(tmp, code)

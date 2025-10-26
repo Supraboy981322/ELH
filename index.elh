@@ -6,7 +6,9 @@
     <body>
         <h1>elh</h1>
         <$Java
-            System.out.println("Java works");
+            public static void main(String[] args) {
+                    System.out.println("Java works");
+            }
         $>
     </body>
 </html>
