@@ -4,11 +4,14 @@
         <title>egp</title>
     </head>
     <body>
-        <h1>elh</h1>
-        <$Java
-            public static void main(String[] args) {
-                    System.out.println("Java works");
-            }
-        $>
+        <h1><$JS console.log("elh"); $></h1>
+        <p>Files in current directory</p>
+        <div>
+            <$BaSh
+            for file in $(ls); do
+                echo "<p>$file</p>"
+            done
+            $>
+        </p>
     </body>
 </html>
