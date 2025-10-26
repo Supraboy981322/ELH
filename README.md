@@ -19,7 +19,7 @@ Freely embed various programming languages into HTML; like PHP, but without PHP.
 
 - list files in directory with Bash
   ```html
-  <!DOCTYPE html
+  <!DOCTYPE html>
   <body>
     <h1>files</h1>
     <ul>
