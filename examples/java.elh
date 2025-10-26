@@ -1,26 +1,25 @@
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>ELH - Java example</title>
+        <link rel="stylesheet" href="/style.css">
     <body>
         <h1>ELH Java example</h1>
         <p>Runs the following Java code on the server, similar to PHP</p>
-        <pre>
-            <code>
-    public static void main(String[] args) {
-        System.out.println("&lt;p&gt;");
-        for (int num = 100, i = 1; num <= 1000; num++) {
-            if (num % 5 == 0 && num % 6 == 0) { 
-                String whiteSpace = (i % 10 == 0) ? "&lt;/p&gt;&lt;p&gt;" : "  ";
-                System.out.printf("%d%s", num, whiteSpace);
-                i++;
-            }
-        }
-        System.out.println("&lt;/p&gt;");
-    }
-            </code>
-        </pre>
-        <p>The output:</p>
+        <pre><code>
+    <pur>public static void</pur> <blu>main</blu><gra>(</gra><yel>String</yel><gra>[]</gra> <red>args</red><gra>) {</gra>
+        <yel>System</yel><dar>.</dar><gra>out</gra><dar>.</dar><blu>println</blu><dar>(</dar><gre>"&lt;p&gt;"</gre><dar>);</dar>
+        <pur>for</pur> <dar>(</dar><pur>int</pur> num <gra>=</gra> <ora>100</ora><dar>,</dar> i <gra>=</gra> <ora>1</ora><dar>;</dar> num <gra><=</gra> 1000<dar>;</dar> num<gra>++</gra><dar>) {</dar>
+            <pur>if</pur> <dar>(</dar>num <gra>%</gra> <ora>5</ora> <gra>==</gra> <ora>0</ora> <gra>&&</gra> num <gra>%</gra> <ora>6</ora> <gra>==</gra> <ora>0</ora><dar>) {</dar>
+                <yel>String</yel> whiteSpace <gra>=</gra> <dar>(</dar>i <gra>%</gra> <ora>10</ora> <gra>==</gra> <ora>0</ora><dar>)</dar> <gra>?</gra> <gre>"&lt;/p&gt;&lt;p&gt;"</gre> <gra>:</gra> <gre>"  "</gre><dar>;</dar>
+                <yel>System</yel><dar>.</dar><gra>out</gra><dar>.</dar><blu>printf</blu><dar>(</dar><gre>"%d%s"</gre><dar>,</dar> num<dar>,</dar> whiteSpace<dar>);</dar>
+                i<gra>++</gra><dar>;</dar>
+            <dar>}
+        }</dar>
+        <yel>System</yel><dar>.</dar><gra>out</gra><dar>.</dar><blu>println</blu><dar>(</dar><gre>"&lt;/p&gt;"</gre><dar>);
+    }</dar>
+        </code></pre>
+        <h3>The output:</h3>
         <$java
             public static void main(String[] args) {
                 System.out.println("<p>");

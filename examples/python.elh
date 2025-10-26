@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - Python example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <h1>ELH Python example</h1>
+        <p>Runs the following Python script on the server, similar to PHP</p>
+        <pre><code>
+    <pur>def</pur> <blu>fibonacci</blu><dar>(</dar><red>n</red><dar>):</dar>
+        a<gra>,</gra> b <gra>=</gra> <ora>0</ora><dar>,</dar> <ora>1</ora>
+        <pur>for</pur> _ <pur>in</pur> <ora>range</ora><dar>(</dar>n<dar>):</dar>
+            <ora>print</ora><dar>(</dar>a<dar>,</dar> <red>end</red><gra>=</gra><gre>" "</gre><dar>)</dar>
+            a<dar>,</dar> b <gra>=</gra> b<dar>,</dar> a <gra>+</gra> b
+    
+    num_terms <gra>=</gra> <ora>int</ora><dar>(</dar><ora>15</ora><dar>)</dar>
+    <blu>fibonacci</blu><dar>(</dar>num_terms<dar>)</dar>
+    <ora>print</ora><dar>()</dar>
+        </code></pre>
+        <h3>The output:</h3>
+        <$py
+def fibonacci(n):
+    a, b = 0, 1
+    for _ in range(n):
+        print(a, end=" ")
+        a, b = b, a + b
+
+num_terms = int(15)
+fibonacci(num_terms)
+print()
+        $>
+    </body>
+</html>
+

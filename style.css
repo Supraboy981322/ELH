@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root {
+    font-family: "DM Serif Display";
+    color: #fffffe;
+    background-color: #282828;
+    padding: 1em;
+}
+
+a {
+    color: #d6820e;
+}
+
+red {
+    color: #ed8796;
+}
+
+blu {
+    color: #8caaee;
+}
+
+ora {
+    color: #f5a97f;
+}
+
+pur {
+    color: #ca9ee6;
+}
+
+pin {
+    color: #f5bde6;
+}
+
+mag {
+    color: #c6a0f6;
+}
+
+gra {
+    color: #7dc4e4;
+}
+
+gre {
+    color: #a6da95;
+}
+
+dar {
+    color: #5c5f77;
+}
+
+yel {
+    color: #eed49f;
+}
+
+code {
+    background-color: black;
+    color: orange;
+    padding: 0.25em;
+    border-radius: 0.25em;
+} 
+
+pre:has(code) {
+    background-color: #0C1023;
+    color: #eff1f5;
+    padding: 0.5em 0.75em;
+    border-radius: 0.35em;
+    border: 0.075em solid #349eeb;
+    width: calc(100% - 1.5em);
+    code {
+        color: unset;
+        background-color: transparent;
+        padding: unset;
+    }
+}

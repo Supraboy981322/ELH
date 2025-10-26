@@ -1,18 +1,17 @@
-<!DOCTYPE html
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>ELH - Bash example</title>
+        <link rel="stylesheet" href="/style.css">
     <body>
         <h1>ELH Bash example</h1>
         <p>Runs the following Bash script on the server, similar to PHP</p>
-        <pre>
-            <code>
-    for file in $(ls); do
-        printf "&lt;p&gt;$file&lt;/p&gt;\n"
-    done
-            </code>
-        </pre>
-        <p>The output:</p>
+        <pre><code>
+    <pur>for</pur> file <pur>in</pur> <pin>$(</pin><blu>ls</blu><pin>)</pin><dar>;</dar> <pur>do</pur>
+        <red>printf<red> <gre>"&lt;p&gt;<pin>${</pin><mag>file</mag><pin>}</pin><gre>&lt;/p&gt;\n"</gre>
+    <pur>done</pur>
+        </code></pre>
+        <h3>The output:</h3>
         <$bash
             for file in $(ls); do
               printf "<p>$file</p>\n"
