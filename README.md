@@ -8,8 +8,8 @@ Freely embed various programming languages into HTML; like PHP, but without PHP.
 ---
 
 ### known working languages:
-- Java (23)
-- Python (3)
+- Java (tested with Java 23)
+- Python (tested with Python 3)
 - Bash
 - JavaScript (tested with Bun) 
 
