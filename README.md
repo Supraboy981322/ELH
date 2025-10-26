@@ -51,6 +51,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - Marked
 - Lua
   - Lua
+- Brainfuck
+  - beef
 
 ---
 
@@ -79,3 +81,4 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [ ] PHP
 - [ ] Perl
 - [x] Lua
+- [x] Brainfuck
