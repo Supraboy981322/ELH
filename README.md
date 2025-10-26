@@ -35,6 +35,23 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 
 ---
 
+### Dependencies
+>[!NOTE]
+>You only need to install the dependencies for the languages you're using
+
+- JavaScript
+  - Bun
+- Java
+  - Java
+- Bash
+  - Bash
+- Python
+  - Python3
+- Markdown
+  - Marked
+
+---
+
 ### TODO
 
 ~~-----------~~  ***`functionality`***  ~~-----------~~

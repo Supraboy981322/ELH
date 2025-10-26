@@ -10,8 +10,8 @@
         <ul>
             <$BaSh
                 files="$(ls examples)"
-                for file in $(ls examples); do
-                        echo "<li><a href=\"examples/$file\">$file</a></li>"
+                for file in ${files}; do
+                    echo "<li><a href=\"examples/${file}\">${file}</a></li>"
                 done
             $>
         </ul>
