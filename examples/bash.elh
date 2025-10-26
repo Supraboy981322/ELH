@@ -1,0 +1,22 @@
+<!DOCTYPE html
+<html lang="en">
+    <head>
+        <title>ELH - Java example</title>
+    <body>
+        <h1>ELH Bash example</h1>
+        <p>Runs the following Bash scritp on the server, similar to PHP</p>
+        <pre>
+            <code>
+    for file in $(ls); do
+        printf "&lt;p&gt;$file&lt;/p&gt;\n"
+    done
+            </code>
+        </pre>
+        <p>The output:</p>
+        <$bash
+            for file in $(ls); do
+              printf "<p>$file</p>\n"
+            done
+          $>
+    </body>
+</html>
