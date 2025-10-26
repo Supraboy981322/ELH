@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="/style.css">
     <body>
         <h1>ELH Lua example</h1>
-        <p>Runs the following Lua script on the server, similar to PHP</p>
+        <p>Runs the following Lua code on the server, similar to PHP</p>
         <pre><code>
     <pur>local</pur> count <gra>=</gra> <ora>1</ora>
     <pur>while</pur> count <gra>&lt;=</gra> <ora>5</ora> <pur>do</pur>
