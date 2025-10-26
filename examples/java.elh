@@ -28,7 +28,7 @@
                     if (num % 5 == 0 && num % 6 == 0) { 
                         String whiteSpace = (i % 10 == 0) ? "</p><p>" : "  ";
                         System.out.printf("%d%s", num, whiteSpace);
-                        i++
+                        i++;
                     }
                 }
                 System.out.println("</p>");

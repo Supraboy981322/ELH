@@ -11,7 +11,6 @@ import (
 
 const (
 	port = "8080"	
-//	elhDeInit = "$>"
 )
 
 var (
