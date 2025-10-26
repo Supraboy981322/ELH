@@ -86,6 +86,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				errOut("elh failed:  %v", err)
 			}
+			w.Header().Set("Content-Type", "text/html")
 		} else {
 			result = fileStr
 		}
