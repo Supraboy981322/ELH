@@ -238,7 +238,8 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 	case "go":
 		head := fmt.Sprintf("package main\nimport (\n%s\n)\n", imps)
 		code = fmt.Sprintf("%s%s", head, code)
-	case "":
+	case "php":
+		code = fmt.Sprintf("<?php\n%s\n?>", code)
 	default:
 	}
 	return code

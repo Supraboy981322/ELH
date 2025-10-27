@@ -42,7 +42,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - JavaScript
   - bun
 - Java
-  - java
+  - java (tested with jdk-23)
 - Bash
   - bash
 - Python
@@ -59,6 +59,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - r-base
 - Ruby
   - ruby
+- PHP
+  - php (tested with php8.4-cli)
 
 ---
 
@@ -84,7 +86,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] JavaScript
 - [x] Markdown
 - [x] Ruby
-- [ ] PHP
+- [x] PHP
 - [ ] Perl
 - [x] Lua
 - [x] Brainfuck

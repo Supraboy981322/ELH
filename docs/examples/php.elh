@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - PHP example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <a class="home" href="/">home</a>
+        <a class="back" href="/docs/examples">back</a>
+        <h1>ELH PHP example</h1>
+        <p>Runs the following PHP script on the server, as it normally would.</p>
+        <pre><code>
+    <pur>for</pur> <dar>(</dar>$i <gra>=</gra> <ora>0</ora><dar>;</dar> $i <gra>&lt;</gra> <ora>5</ora><dar>;</dar> $i<gra>++</gra><dar>) {</dar>
+        <pur>echo</pur> <gre>"Iteration "</gre> <gra>.</gra> $i <gra>.</gra> <gre>"&lt;br&gt;"</gre><dar>;
+    }</dar>
+        </code></pre>
+        <h2>The output:</h2>
+        <$php
+            for ($i = 0; $i < 5; $i++) {
+                echo "Iteration " . $i . "<br>";
+            }
+        $>
+    </body>
+</html>
+

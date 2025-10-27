@@ -61,6 +61,12 @@ func DefaultRegistry() map[string]Runner {
 			Timeout: 5 * time.Second,
 			Env:     os.Environ(),
 		},
+		"php": &ExternalRunner{
+			CmdName: "php",
+			Args:    []string{},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
 		"md": &ExternalRunner{
 			CmdName: "marked",
 			Args:    []string{"-i"},
