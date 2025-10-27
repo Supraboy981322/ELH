@@ -73,8 +73,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] Parsing `.elh` for language tags
 - [x] Basic definitions for language tags
 - [x] Executing code in language tags
-- [ ] Injecting formatting requirements for various languages 
-- [ ] Mime types for files other-than `.elh`
+- [x] Injecting formatting requirements for various languages 
+- [x] Mime types for files other-than `.elh`
 - [ ] Passing headers and params
 - [ ] imports
 - [ ] user-defined languages (?)
