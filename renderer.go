@@ -177,27 +177,26 @@ func parseAndRun(src string, registry map[string]Runner) (string, error) {
 	return out.String(), nil
 }
 
-func getImpsBetween(code string, start string, end string) ([]string, bool) {
+func getImpsBetween(code string, start string, end string) []string {
 	res := []string{""}
 	
 	star := strings.Index(code, start)
 	if star == -1 {
 		res[0] = code
-		return res, false
+		return res
 	}
 	star += len (start)
 
 	en := strings.Index(code[star:], end)
 	if en == -1 {
 		res[0] = code
-		return res, false
+		return res
 	}
 
 	res[0] = code[star : star+en]
 
 	res = strings.Split(res[0], " ; ")
-	
-	return res, true
+	return res
 }
 
 func stripImps(code string) string {
@@ -236,7 +235,7 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 }
 
 func formatCode(code string, lang string, tmpName string, tmpDir string) string { 
-	impArray, impCheck := getImpsBetween(code, "<??imps", "??>")
+	impArray := getImpsBetween(code, "<??imps", "??>")
 	code = stripImps(code)
 	var imps string
 	switch (lang) {
@@ -246,22 +245,22 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 		code = fmt.Sprintf("public class %s {\n%s\n}\n", class, code)
 	case "go":
 		var head string
-		if impCheck {
+		if impArray[0] != ""  {
 			for i := 0; i < len(impArray); i++ {
-				imps = fmt.Sprintf("%s\n", impArray[i])
+				imps = fmt.Sprintf("%s\n", strings.TrimSpace(impArray[i]))
 			}
 			head = fmt.Sprintf("package main\nimport (\n%s\n)\n", imps)
 		} else {
 			head = "package main\n"
 		}
-		code = fmt.Sprintf("%s%s", head, code)
+		code = head + code
 	case "php":
-		code = fmt.Sprintf("<?php\n%s\n?>", code)
-	case "python":
-		if impCheck {
+		code = "<?php\n" + code
+	case "py":
+		if impArray[0] != "" {
 			var head string
 			for i := 0; i < len(impArray); i++ {
-				head = fmt.Sprintf("import ", impArray[i])
+				head += fmt.Sprintf("import %s\n", strings.TrimSpace(impArray[i]))
 			}
 			code = fmt.Sprintf("%s\n%s", head, code)
 		}
