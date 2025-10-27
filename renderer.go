@@ -255,7 +255,7 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 		}
 		code = head + code
 	case "php":
-		code = "<?php\n" + code
+		code = "<?php\n" + code + "\n?>"
 	case "py":
 		if impArray[0] != "" {
 			var head string
