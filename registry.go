@@ -49,6 +49,12 @@ func DefaultRegistry() map[string]Runner {
 			Timeout: 5 * time.Second,
 			Env:     os.Environ(),
 		},
+		"r": &ExternalRunner{
+			CmdName: "Rscript",
+			Args:    []string{},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
 		"md": &ExternalRunner{
 			CmdName: "marked",
 			Args:    []string{"-i"},

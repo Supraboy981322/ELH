@@ -47,13 +47,22 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func checkIsDir(file string) string {
-	fileInfo, _ := os.Stat(file)
+
+//returns error so Go doesn't panic, but error
+//  is ignored when call fn
+//   (it's handled later, after fn call) 
+func checkIsDir(file string) (string, error) {
+	fileInfo, err := os.Stat(file)
+	if err != nil {
+		return file, err
+	}
 	if fileInfo.IsDir() {
 		file = fmt.Sprintf("%s/index", file)
 	}
-	return file
+	return file, nil
 }
+
+
 func getHandler(w http.ResponseWriter, r *http.Request) {
 	//get the requested file
 	file := r.URL.Path
@@ -61,10 +70,10 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		file = "index"
 	} else if file[len(file)-1:] ==  "/" {
 		file = fmt.Sprintf("%sindex", string(file[1:]))
-		file = checkIsDir(file)
+		file, _ = checkIsDir(file)
 	} else {
 		file = file[1:]
-		file = checkIsDir(file)
+		file, _ = checkIsDir(file)
 	}
 
 	//get the extension of the requested file
@@ -107,9 +116,10 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	
 		//log request
-		fmt.Printf("\nreq:  %s\n", file)	
+		fmt.Printf("resp:  %s\n\n", file)	
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
+		fmt.Printf("resp:  forbidden\n\n")
 	}
 }
 

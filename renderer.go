@@ -207,12 +207,12 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		modCont := []byte("module elh\n\ngo 1.20\n")
 		err := os.WriteFile(filepath.Join(tmpDir, "go.mod"), modCont, 0644)
 		if err != nil {
-			fmt.Printf("err prepping for Go:  %v\n", err)
+			fmt.Errorf("err prepping for Go:  %v\n", err)
 			return nil
 		}
 		file, err := os.Create(filepath.Join(tmpDir, "main.go"))
 		if err != nil {
-			fmt.Println(err)
+			fmt.Errorf("%v", err)
 			return nil
 		}
 		return file
@@ -220,7 +220,7 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		fileName := fmt.Sprintf(filepath.Base(tmpDir))
 		file, err := os.Create(filepath.Join(tmpDir, fileName))
 		if err != nil {
-			fmt.Println(err)
+			fmt.Errorf("%v", err)
 			return nil
 		}
 		return file

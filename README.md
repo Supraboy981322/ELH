@@ -55,6 +55,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - beef
 - Go
   - go
+- R
+  - r-base
 
 ---
 
@@ -76,7 +78,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] Python
 - [x] Bash
 - [x] Java
-- [ ] R
+- [x] R
 - [x] JavaScript
 - [x] Markdown
 - [ ] Ruby
