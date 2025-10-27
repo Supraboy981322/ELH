@@ -9,6 +9,9 @@
         <h1>ELH R example</h1>
         <p>Runs the following R code on the server, similar to PHP</p>
         <pre><code>
+    <pur>for</pur> <dar>(</dar>i <pur>in</pur> <ora>1<gra>:</gra>5</ora><dar>) {</dar>
+        <blu>print<dar>(</dar>paste</blu><dar>(<gre>"Iteration:"</gre>,</dar> i<dar>))
+    }</dar>
         </code></pre>
         <h2>The output:</h2>
         <$r

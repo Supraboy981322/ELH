@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - Bash example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <a class="home" href="/">home</a>
+        <a class="back" href="/docs/examples">back</a>
+        <h1>ELH Bash example</h1>
+        <p>Runs the following Bash script on the server, similar to PHP</p>
+        <pre><code>
+    fruits <gra>=</gra> <dar>[</dar><gre>"apple"</gre><dar>,</dar> <gre>"banana"</gre><dar>,</dar> <gre>"cherry"</gre><dar>]</dar>
+    fruits<dar>.<blu>each</blu> <pur>do</pur> |<red>fruit</red>|</dar>
+        <blu>puts</blu> <gre>"&lt;p&gt;I like</gre> <pin>#{</pin>fruit<pin>}</pin><gre>.&lt;/p&gt;"</gre>
+    <pur>end</pur>
+        </code></pre>
+        <h2>The output:</h2>
+        <$ruby
+            fruits = ["apple", "banana", "cherry"]
+            fruits.each do |fruit|
+                puts "<p>I like #{fruit}.</p>"
+            end
+        $>
+    </body>
+</html>

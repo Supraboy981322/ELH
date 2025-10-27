@@ -40,23 +40,25 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 >You only need to install the dependencies for the languages you're using
 
 - JavaScript
-  - Bun
+  - bun
 - Java
-  - Java
+  - java
 - Bash
-  - Bash
+  - bash
 - Python
-  - Python3
+  - python3
 - Markdown
-  - Marked
+  - marked
 - Lua
-  - Lua
+  - lua
 - Brainfuck
   - beef
 - Go
   - go
 - R
   - r-base
+- Ruby
+  - ruby
 
 ---
 
@@ -81,7 +83,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] R
 - [x] JavaScript
 - [x] Markdown
-- [ ] Ruby
+- [x] Ruby
 - [ ] PHP
 - [ ] Perl
 - [x] Lua
