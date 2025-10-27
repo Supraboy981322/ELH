@@ -24,7 +24,7 @@ var (
 )
 
 type Runner interface {
-	Run(code string) (stdout string, stderr string, err error)
+	Run(code string, tmp *os.File) (stdout string, stderr string, err error)
 }
 
 
@@ -64,7 +64,6 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		//  have no ext in url
 		for i := 0; i < len(suppNoExt); i++ {
 			checkFile := fmt.Sprintf("%s%s", file, suppNoExt[i])
-			fmt.Println(checkFile)
 			_, err := os.Stat(checkFile)
 			if err == nil { //if the file exists
 				file = checkFile //assume it's the correct one

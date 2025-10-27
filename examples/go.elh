@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - Bash example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <a class="home" href="/">home</a>
+        <h1>ELH Go example</h1>
+        <p>Runs the following Go code on the server, similar to PHP</p>
+        <pre><code>
+    <i><dar>// A function that takes two integers and returns their sum</dar></i>
+    <pur>func</pur> <blu>add</blu><dar>(</dar><red>a</red><dar>,</dar> <red>b</red> <pur>int<dar>)</dar> int <dar>{</dar>
+        return</pur> a <gra>+</gra> b
+    <dar>}</dar>
+        
+    <i><dar>// A function that returns multiple values</dar></i>
+    <pur>func <blu>swap</blu><dar>(</dar><red>x</red><dar>,</dar> <red>y</red> string<dar>)</dar> <dar>(</dar>string<dar>,</dar> string<dar>) {</dar>
+        return</pur> y<dar>,</dar> x
+    <dar>}</dar>
+
+    <pur>func</pur> <blu>main</blu><dar>() {</dar>
+        result <gra>:=<gra> <blu>add</blu><dar>(<ora>5</ora, <ora>3</ora>)</dar>
+        fmt<dar>.<blu>Println</blu>(<gre>"Sum:"</gre>,</dar> result<dar>)</dar>
+
+        first<dar>,</dar> second <gra>:=</gra> <blu>swap</blu><dar>(<gre>"hello"</gre>, <gre>"world"</gre>)</dar>
+        fmt<dar>.</dar><blu>Println</blu><dar>(</dar>first<dar>,</dar> second<dar>)
+    }</dar>
+        </code></pre>
+        <h2>The output:</h2>
+        <$go
+            <??imps
+                "fmt"
+            ??>
+            // A function that takes two integers and returns their sum
+            func add(a, b int) int {
+            	return a + b
+            }
+        
+            // A function that returns multiple values
+            func swap(x, y string) (string, string) {
+            	return y, x
+            }
+
+            func main() {
+            	result := add(5, 3)
+            	fmt.Println("Sum:", result)
+
+            	first, second := swap("hello", "world")
+            	fmt.Println(first, second)
+            }
+        $>
+    </body>
+</html>
+

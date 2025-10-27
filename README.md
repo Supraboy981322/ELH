@@ -53,6 +53,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - Lua
 - Brainfuck
   - beef
+- Go
+  - go
 
 ---
 
@@ -70,7 +72,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [ ] user-defined languages (?)
 
 ~~-------------~~  ***`languages`***  ~~-------------~~
-- [ ] Go
+- [x] Go
 - [x] Python
 - [x] Bash
 - [x] Java

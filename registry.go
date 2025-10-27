@@ -37,6 +37,12 @@ func DefaultRegistry() map[string]Runner {
 			Timeout: 5 * time.Second,
 			Env:     os.Environ(),
 		},
+		"go": &ExternalRunner{
+			CmdName: "go",
+			Args:    []string{"run"},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
 		"bf": &ExternalRunner{
 			CmdName: "beef",
 			Args:    []string{},
