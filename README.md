@@ -77,6 +77,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] Mime types for files other-than `.elh`
 - [ ] Passing headers and params
 - [ ] imports
+- [ ] Fix indentation bug
 - [ ] user-defined languages (?)
 
 ~~-------------~~  ***`languages`***  ~~-------------~~
