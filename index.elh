@@ -5,14 +5,19 @@
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
-        <h1><$JS console.log("ELH"); $></h1>
+        <h1><$js console.log("ELH"); $></h1>
         <h3>Examples:</h3>
-        <p>Number: <$Bash ls examples | wc -l $></p>
+        <h3>Docs:</h3>
         <ul>
-            <$BaSh
-                files="$(ls examples)"
+            <$bash
+                dir="docs"
+                files="$(ls ${dir})"
                 for file in ${files}; do
-                    echo "<li><a href=\"examples/${file}\">${file}</a></li>"
+                    name="${file}"
+                    if [[ "${file}" == "index.elh" ]]; then
+                        name="all"
+                    fi
+                    echo "<li><a href=\"${dir}/${file}\">${name}</a></li>"
                 done
             $>
         </ul>

@@ -47,6 +47,13 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func checkIsDir(file string) string {
+	fileInfo, _ := os.Stat(file)
+	if fileInfo.IsDir() {
+		file = fmt.Sprintf("%s/index", file)
+	}
+	return file
+}
 func getHandler(w http.ResponseWriter, r *http.Request) {
 	//get the requested file
 	file := r.URL.Path
@@ -54,9 +61,12 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		file = "index"
 	} else if file[len(file)-1:] ==  "/" {
 		file = fmt.Sprintf("%sindex", string(file[1:]))
+		file = checkIsDir(file)
 	} else {
 		file = file[1:]
+		file = checkIsDir(file)
 	}
+
 	//get the extension of the requested file
 	ext := filepath.Ext(file)	
 	if ext == "" { //if there is no ext

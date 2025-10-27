@@ -3,9 +3,20 @@
 :root {
     font-family: "DM Serif Display";
     color: #fffffe;
-    background-color: #282828;
+    background-image: url("/assets/grain-bg.png");
+    background-repeat:repeat;
+    background-blend-mode: multiply;
+    background-color: rgba(40,40,40,1);
+    background-position: center center;
+    background-attachment: fixed;
     padding: 1em;
     padding-top: 0em;
+}
+
+.back {
+    position: absolute;
+    top: 0.35em;
+    left: 4.5em;
 }
 
 .home {

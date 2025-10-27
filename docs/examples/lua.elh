@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="/style.css">
     <body>
         <a class="home" href="/">home</a>
+        <a class="back" href="/docs/examples">back</a>
         <h1>ELH Lua example</h1>
         <p>Runs the following Lua code on the server, similar to PHP</p>
         <pre><code>
