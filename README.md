@@ -61,6 +61,8 @@ Freely embed various programming languages into HTML; like PHP, but with more th
   - ruby
 - PHP
   - php (tested with php8.4-cli)
+- Perl
+  - perl
 
 ---
 
@@ -87,6 +89,6 @@ Freely embed various programming languages into HTML; like PHP, but with more th
 - [x] Markdown
 - [x] Ruby
 - [x] PHP
-- [ ] Perl
+- [x] Perl
 - [x] Lua
 - [x] Brainfuck
