@@ -21,5 +21,34 @@
                 done
             $>
         </ul>
+        <h3>Progress</h3>
+        <div class="progTrack">
+            <$md
+~~-----------~~  ***`functionality`***  ~~-----------~~
+- [x] HTTP server
+- [x] Parsing `.elh` for language tags
+- [x] Basic definitions for language tags
+- [x] Executing code in language tags
+- [ ] Injecting formatting requirements for various languages 
+- [ ] Mime types for files other-than `.elh`
+- [ ] Passing headers and params
+- [ ] imports
+- [ ] user-defined languages (?)
+
+~~-------------~~  ***`languages`***  ~~-------------~~
+- [x] Go
+- [x] Python
+- [x] Bash
+- [x] Java
+- [x] R
+- [x] JavaScript
+- [x] Markdown
+- [ ] Ruby
+- [ ] PHP
+- [ ] Perl
+- [x] Lua
+- [x] Brainfuck
+            $>
+        </div>
     </body>
 </html>
