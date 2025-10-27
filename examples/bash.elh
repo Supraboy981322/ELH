@@ -4,6 +4,7 @@
         <title>ELH - Bash example</title>
         <link rel="stylesheet" href="/style.css">
     <body>
+        <a class="home" href="/">home</a>
         <h1>ELH Bash example</h1>
         <p>Runs the following Bash script on the server, similar to PHP</p>
         <pre><code>
@@ -11,7 +12,7 @@
         <red>printf<red> <gre>"&lt;p&gt;<pin>${</pin><mag>file</mag><pin>}</pin><gre>&lt;/p&gt;\n"</gre>
     <pur>done</pur>
         </code></pre>
-        <h3>The output:</h3>
+        <h2>The output:</h2>
         <$bash
             for file in $(ls); do
               printf "<p>$file</p>\n"

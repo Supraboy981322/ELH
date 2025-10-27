@@ -5,10 +5,17 @@
     color: #fffffe;
     background-color: #282828;
     padding: 1em;
+    padding-top: 0em;
+}
+
+.home {
+    position: absolute;
+    top: 0.35em;
+    left: 1.5em;
 }
 
 a {
-    color: #d6820e;
+    color: #d6820e !important;
 }
 
 red {
@@ -52,10 +59,11 @@ yel {
 }
 
 code {
-    background-color: black;
+    background-color: #0C1023;
     color: orange;
     padding: 0.25em;
     border-radius: 0.25em;
+    border: 0.075em solid #349eeb;
 } 
 
 pre:has(code) {
@@ -69,5 +77,6 @@ pre:has(code) {
         color: unset;
         background-color: transparent;
         padding: unset;
+        border: unset;
     }
 }

@@ -4,6 +4,7 @@
         <title>ELH - Lua example</title>
         <link rel="stylesheet" href="/style.css">
     <body>
+        <a class="home" href="/">home</a>
         <h1>ELH Lua example</h1>
         <p>Runs the following Lua code on the server, similar to PHP</p>
         <pre><code>
@@ -13,7 +14,7 @@
         count <gra>=</gra> count <gra>+</gra> <ora>1</ora>
     <pur>end</pur>
         </code></pre>
-        <h3>The output:</h3>
+        <h2>The output:</h2>
         <$lua
             local count = 1
             while count <= 5 do
