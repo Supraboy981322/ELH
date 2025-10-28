@@ -7,14 +7,6 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 
 ---
 
-### known working languages:
-- Java (tested with Java 23)
-- Python (tested with Python 3)
-- Bash
-- JavaScript (tested with Bun) 
-
----
-
 ### Usage examples
 
 - list files in directory with Bash
