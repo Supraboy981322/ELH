@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
-        <h1><$js console.log("ELH"); $></h1>
+        <h1>ELH</h1>
         <h3>Examples:</h3>
         <h3>Docs:</h3>
         <ul>
