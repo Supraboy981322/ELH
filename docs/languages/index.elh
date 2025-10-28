@@ -8,14 +8,14 @@
         <a class="home" href="/">home</a>
         <a class="back" href="/docs">back</a>
         <h1><$lua print("ELH") $> Languages</h1>
-        <p>Number: <$Bash $(($(ls docs/languages | wc -l) - 1)) $></p>
+        <p>Number: <$Bash printf "$(($(ls docs/languages | wc -l) - 1))"$></p>
         <ul>
             <$bash
                 dir=""
                 files="$(ls docs/languages)"
                 for file in ${files}; do
                     if [[ "${file}" != "index.elh" ]]; then
-                        echo "<li><a href=\"languages/${file}\">${file}</a></li>"
+                        printf "<li><a href=\"languages/${file}\">${file}</a></li>"
                     fi
                 done
             $>
