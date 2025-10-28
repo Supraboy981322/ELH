@@ -60,6 +60,10 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 
 ### TODO
 
+>[!NOTE]
+>This project will reach v1.0.0 when I finish the TODO list; until then, there will be no version numbering
+>  (as I add more to the list as I think of things that it needs for completion) 
+
 ~~-----------~~  ***`functionality`***  ~~-----------~~
 - [x] HTTP server
 - [x] Parsing `.elh` for language tags
