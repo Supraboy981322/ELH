@@ -31,7 +31,7 @@ Freely embed various programming languages into HTML; like PHP, but with more th
     </ul>
   </body>
   ```
-- [more examples](https://github.com/Supraboy981322/ELH/tree/master/examples)
+- [more examples](https://github.com/Supraboy981322/ELH/tree/master/docs/examples)
 
 ---
 
