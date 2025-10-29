@@ -31,7 +31,7 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 >[!NOTE]
 >You only need to install the dependencies for the languages you're using
 
-- JavaScript
+- JS/TS
   - bun
 - Java
   - java (tested with jdk-23)
