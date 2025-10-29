@@ -91,5 +91,5 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - [x] Perl
 - [x] Lua
 - [x] Brainfuck
-- [ ] Basic
+- [x] Basic
 - [ ] Dart
