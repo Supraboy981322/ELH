@@ -171,6 +171,9 @@ func parseAndRun(src string, registry map[string]Runner) (string, error) {
 		if err != nil {
 			return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
 		}
+
+		stdout = formatSTD(lang, stdout)
+
 		out.WriteString(stdout)
 		i = end + 2
 	}
@@ -264,9 +267,23 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 			}
 			code = fmt.Sprintf("%s\n%s", head, code)
 		}
-		default:
+	case "basic":
+		code = code + "\nQUIT"
+	default:
 	}
 	return code
+}
+
+func formatSTD(lang string, stdout string) string {
+	res := stdout
+	switch lang {
+	case "basic":
+		stdLi := strings.Split(stdout, "\n")
+		stdLi = stdLi[3:]
+		res = strings.Join(stdLi, "\n") 
+	default:
+	}
+	return res
 }
 
 func errRun(str string, err error) (string, string, error) {

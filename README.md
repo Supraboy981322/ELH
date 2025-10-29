@@ -55,6 +55,8 @@ Freely embed various programming languages into HTML; like PHP, but without bein
   - php (tested with php8.4-cli)
 - Perl
   - perl
+- Basic
+  - bwbasic
 
 ---
 
