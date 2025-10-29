@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ELH - Basic example</title>
+    <link rel="stylesheet" href="/style.css">
+  <body>
+    <a class="home" href="/">home</a>
+    <a class="back" href="/docs/examples">back</a>
+    <h1>ELH Basic example</h1>
+    <p>Runs the following Basic script on the server, similar to PHP</p>
+    <pre><code>
+  <pur>FOR</pur> i <gra>=</gra> <ora>1</ora> <pur>TO <ora>10</ora>
+    PRINT <gre>"&lt;p&gt;Hello, World!&lt;/p&gt;"</gre>
+  NEXT</pur> i
+    </code></pre>
+    <h2>The output:</h2>
+    <$basic
+      FOR i = 1 TO 10
+        PRINT "<p>Hello, World!</p>"
+      NEXT i
+    $>
+  </body>
+</html>
