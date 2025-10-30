@@ -102,7 +102,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = Render(fileStr)
+			result, err = Render(fileStr, r)
 			if err != nil {
 				errOut("elh failed;", err)
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)

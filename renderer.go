@@ -9,6 +9,7 @@ import (
 	"bytes"
 	"context"
 	"strings"
+	"net/http"
 	"path/filepath"
 )
 
@@ -96,7 +97,7 @@ func (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error) 
 	return stdoutStr, stderrStr, nil 
 }
 
-func parseAndRun(src string, registry map[string]Runner) (string, error) {
+func parseAndRun(src string, registry map[string]Runner, req *http.Request) (string, error) {
 	var out strings.Builder
 	i := 0
 	n := len(src)
@@ -163,6 +164,11 @@ func parseAndRun(src string, registry map[string]Runner) (string, error) {
 
 		defer os.RemoveAll(tmpDir)
 
+		err = genLib(lang, req, tmpDir)
+		if err != nil {
+			errRun("generate lib", err)
+		}
+		
 		tmp := prepForLangsWithOddReqs(lang, tmpDir)
 
 		code = formatCode(code, lang, tmp.Name(), tmpDir)
@@ -202,14 +208,6 @@ func getImpsBetween(code string, start string, end string) []string {
 	return res
 }
 
-func stripImps(code string) string {
-	start := strings.Index(code, "??>")
-	if start == -1 {
-		return code
-	}
-	start += 3
-	return code[start:]
-}
 
 func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 	switch (lang) {
@@ -237,60 +235,6 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 	}
 }
 
-func formatCode(code string, lang string, tmpName string, tmpDir string) string { 
-	impArray := getImpsBetween(code, "<??imps", "??>")
-	code = stripImps(code)
-	var imps string
-	switch (lang) {
-	case "java":
-		fileName := strings.ReplaceAll(tmpName, fmt.Sprintf("%s/", tmpDir), "")
-		class := fileName
-		code = fmt.Sprintf("public class %s {\n%s\n}\n", class, code)
-	case "go":
-		var head string
-		if impArray[0] != ""  {
-			for i := 0; i < len(impArray); i++ {
-				imps = fmt.Sprintf("%s\n", strings.TrimSpace(impArray[i]))
-			}
-			head = fmt.Sprintf("package main\nimport (\n%s\n)\n", imps)
-		} else {
-			head = "package main\n"
-		}
-		code = head + code
-	case "php":
-		code = "<?php\n" + code + "\n?>"
-	case "py":
-		if impArray[0] != "" {
-			var head string
-			for i := 0; i < len(impArray); i++ {
-				head += fmt.Sprintf("import %s\n", strings.TrimSpace(impArray[i]))
-			}
-			code = fmt.Sprintf("%s\n%s", head, code)
-		}
-	case "basic":
-		code = code + "\nQUIT"
-	case "vim":
-		code = vimHead + code + "\nqall!"
-		fmt.Println(code)
-	default:
-	}
-	return code
-}
-
-func formatSTD(lang string, stdout string) string {
-	res := stdout
-	switch lang {
-	case "basic":
-		stdLi := strings.Split(stdout, "\n")
-		stdLi = stdLi[3:]
-		res = strings.Join(stdLi, "\n") 
-	case "vim":
-		fmt.Println(stdout)
-	default:
-	}
-	return res
-}
-
 func errRun(str string, err error) (string, string, error) {
 	return "", "", fmt.Errorf("%s:  %w", str, err)
-} 
+}
