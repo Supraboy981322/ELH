@@ -32,33 +32,33 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 >You only need to install the dependencies for the languages you're using
 
 - JS/TS
-  - bun
+  - [bun](bun.sh)
 - Java
-  - java (tested with jdk-23)
+  - [java](java.com) (tested with jdk-23)
 - Bash
-  - bash
+  - [bash](gnu.org/software/bash/)
 - Python
-  - python3
+  - [python3](python.org/)
 - Markdown
-  - marked
+  - [marked](github.com/markedjs/marked)
 - Lua
-  - lua
+  - [lua](lua.org)
 - Brainfuck
   - beef
 - Go
-  - go
+  - [go](go.dev)
 - R
   - r-base
 - Ruby
-  - ruby
+  - [ruby](ruby-lang.org)
 - PHP
-  - php (tested with php8.4-cli)
+  - [php](php.net) (tested with php8.4-cli)
 - Perl
-  - perl
+  - [perl](perl.org)
 - Basic
   - bwbasic
 - VimScript
-  - VIMc
+  - [VIMc](github.com/Supraboy981322/vimc/)
 
 ---
 
