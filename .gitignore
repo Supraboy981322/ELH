@@ -3,6 +3,6 @@ testing/
 src/test/
 src/testing/
 src/*.elh
-src/*/
-src/*/
+src/docs/
+src/assets/
 src/*.css
