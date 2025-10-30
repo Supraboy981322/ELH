@@ -186,28 +186,6 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request) (str
 	return out.String(), nil
 }
 
-func getImpsBetween(code string, start string, end string) []string {
-	res := []string{""}
-	
-	star := strings.Index(code, start)
-	if star == -1 {
-		res[0] = code
-		return res
-	}
-	star += len (start)
-
-	en := strings.Index(code[star:], end)
-	if en == -1 {
-		res[0] = code
-		return res
-	}
-
-	res[0] = code[star : star+en]
-
-	res = strings.Split(res[0], " ; ")
-	return res
-}
-
 
 func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 	switch (lang) {

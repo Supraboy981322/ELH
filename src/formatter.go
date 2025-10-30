@@ -5,6 +5,7 @@ import (
 	"strings"
 	"net/http"
 	"path/filepath"
+	"strconv"
 )
 
 
@@ -23,11 +24,12 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 			for i := 0; i < len(impArray); i++ {
 				imps = strings.TrimSpace(impArray[i]) + "\n"
 			}
-			head = "package main\nimport (\n" + imps + "s\n)\n"
+			head = "package main\nimport (\n" + imps + "\n)\n"
 		} else {
 			head = "package main\n"
 		}
 		code = head + code
+		os.Stdout.WriteString(code)
 	case "php":
 		code = "<?php\n" + code + "\n?>"
 	case "py":
@@ -142,4 +144,28 @@ func genLib(lang string, r *http.Request, tmpDir string) error {
 	default:
 	}
 	return nil
+}
+
+func getImpsBetween(code string, start string, end string) []string {
+	res := []string{""}
+	
+	os.Stdout.WriteString(strconv.Itoa(1))
+	star := strings.Index(code, start)
+	if star == -1 {
+//		res[0] = code
+		return res
+	}
+	star += len (start)
+
+	os.Stdout.WriteString(strconv.Itoa(2))
+	en := strings.Index(code[star:], end)
+	if en == -1 {
+		res[0] = code
+		return res
+	}
+
+	os.Stdout.WriteString(strconv.Itoa(3))
+	res[0] = code[star : star+en]
+	res = strings.Split(res[0], " ; ")
+	return res
 }
