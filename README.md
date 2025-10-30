@@ -1,4 +1,4 @@
-# ELH (Embed Languages in HTML)
+<h1 align="center">ELH (Embed Languages in HTML)</h1>
 
 >[!WARNING]
 >HIGHLY EXPERIMENTAL AND EARLY DEVELOPMENT!
