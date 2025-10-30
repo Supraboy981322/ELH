@@ -1,2 +1,8 @@
 test/
 testing/
+src/test/
+src/testing/
+src/*.elh
+src/*/
+src/*/
+src/*.css
