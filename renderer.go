@@ -269,6 +269,9 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 		}
 	case "basic":
 		code = code + "\nQUIT"
+	case "vim":
+		code = vimHead + code + "\nqall!"
+		fmt.Println(code)
 	default:
 	}
 	return code
@@ -281,6 +284,8 @@ func formatSTD(lang string, stdout string) string {
 		stdLi := strings.Split(stdout, "\n")
 		stdLi = stdLi[3:]
 		res = strings.Join(stdLi, "\n") 
+	case "vim":
+		fmt.Println(stdout)
 	default:
 	}
 	return res
@@ -288,4 +293,4 @@ func formatSTD(lang string, stdout string) string {
 
 func errRun(str string, err error) (string, string, error) {
 	return "", "", fmt.Errorf("%s:  %w", str, err)
-}
+} 

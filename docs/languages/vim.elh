@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ELH - VimScript example</title>
+        <link rel="stylesheet" href="/style.css">
+    <body>
+        <a class="home" href="/">home</a>
+        <a class="back" href="/docs/examples">back</a>
+        <h1>ELH VimScript example</h1>
+        <p>Runs the following VimScript code on the server, similar to PHP</p>
+        <pre><code>
+    <pur>let</pur> strings <gra>=</gra> <dar>[</dar><gre>'foo'<dar>,</dar> 'bar'<dar>,</dar> 'baz'<dar>,</dar> 'quux'</gre><dar>]</dar>
+    <pur>for</pur> i <pur>in</pur> <blu>range<dar>(</dar><ora>0</ora><dar>,</dar> len</blu><dar>(</dar>strings<dar>) <gra>-</gra> <ora>1</ora>)</dar>
+        <pur>let</pur> item <gra>=</gra> strings<dar>[</dar>i<dar>]</dar>
+        <pur>echo</pur> <gre>"&lt;p&gt;"</gre> <dar>.</dar> i <gra>+</gra> <ora>1</ora> <dar>.</dar> <gre>":"</gre> <dar>.</dar> item <dar>.</dar> <gre>"&lt/p&gt;"</gre>
+    <pur>endfor</pur>
+        </code></pre>
+        <h2>The output:</h2>
+        <$vim
+          let strings = ['foo', 'bar', 'baz', 'quux']
+          for i in range(0, len(strings) - 1)
+            let item = strings[i]
+            echo "<p>" . i + 1 . ":" . item . "</p>"
+          endfor
+        $>
+    </body>
+</html>
