@@ -82,17 +82,85 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 
 ~~-------------~~  ***`languages`***  ~~-------------~~
 - [x] Go
+  - [x] Works
+  - [x] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Python
+  - [x] Works
+  - [x] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [ ] Fixed all known bugs
+    - [ ] whitespace requirements
 - [x] Bash
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Java
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] R
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] JavaScript
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Markdown
+  - [x] Works
+  - [ ] Fixed all known bugs
+    - [ ] whitespace requirements
 - [x] Ruby
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] PHP
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Perl
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Lua
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [x] Fixed all known bugs
 - [x] Brainfuck
+  - [x] Works
 - [x] Basic
+  - [x] Works
+  - [x] Fixed all known bugs
 - [x] VimScript
+  - [x] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [ ] Fixed all known bugs
+    - [ ] Strange behavior when printing integers
 - [ ] Dart
+  - [ ] Works
+  - [ ] Imports
+  - [ ] Headers
+  - [ ] Request params
+  - [ ] Fixed all known bugs
