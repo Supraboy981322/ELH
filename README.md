@@ -153,8 +153,8 @@ Freely embed various programming languages into HTML; like PHP, but without bein
   - [x] Fixed all known bugs
 - [x] VimScript
   - [x] Works
-  - [ ] Imports
-  - [ ] Headers
+  - [x] Imports
+  - [x] Headers
   - [ ] Request params
   - [ ] Fixed all known bugs
     - [ ] Strange behavior when printing integers
