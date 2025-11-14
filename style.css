@@ -75,7 +75,7 @@ yel {
 }
 
 code {
-    background-color: #0C1023;
+    background-color: #0C1023 !important;
     color: orange;
     padding: 0.25em;
     border-radius: 0.25em;
@@ -83,7 +83,7 @@ code {
 } 
 
 pre:has(code) {
-    background-color: #0C1023;
+    background-color: #0C1023 !important;
     color: #eff1f5;
     padding: 0.5em 0.75em;
     border-radius: 0.35em;
