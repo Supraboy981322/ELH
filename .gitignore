@@ -6,3 +6,4 @@ src/*.elh
 src/docs/
 src/assets/
 src/*.css
+src/favicon.ico
