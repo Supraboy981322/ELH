@@ -7,6 +7,15 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 
 ---
 
+### Import module
+
+- The repo was created with capital letters, so it's recommended to import with an alias of `elh`:
+```go
+import (
+    elh "github.com/Supraboy981322/ELH"
+)
+```
+
 ### Usage examples
 
 - list files in directory with Bash
@@ -79,6 +88,7 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - [ ] imports
 - [ ] Fix indentation bug
 - [ ] user-defined languages (?)
+- [x] module (?)
 
 ~~-------------~~  ***`languages`***  ~~-------------~~
 - [x] Go
