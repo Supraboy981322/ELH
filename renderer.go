@@ -159,14 +159,16 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request) (str
 		//create temporary dir
 		tmpDir, err := os.MkdirTemp("", "snippet*")
 		if err != nil {
-			return "", errRun("create temporary file", err)
+			_, _, ret := errRun("create temporary file", err)
+			return "", ret
 		}
 
 		defer os.RemoveAll(tmpDir)
 
 		err = genLib(lang, req, tmpDir)
 		if err != nil {
-			return "", errRun("generate lib", err)
+			_, _, ret := errRun("create temporary file", err)
+			return "", ret
 		}
 		
 		tmp := prepForLangsWithOddReqs(lang, tmpDir)
