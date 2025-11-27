@@ -19,6 +19,11 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
+
+
+/* * * * * * * * * * * * *
+ * render from file name *
+ * * * * * * * * * * * * */
 func renderFromFileName(file string, w http.ResponseWriter, r *http.Request) {
 	res, err := elh.RenderFile("test.elh", r)
 	if err != nil {
@@ -27,11 +32,19 @@ func renderFromFileName(file string, w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+
+
+/* * * * * * * * * * * * * * * *
+ * render with custom registry *
+ * * * * * * * * * * * * * * * */
 func renderFromRegistry(file string, w http.ResponseWriter, r *http.Request) {
+	//read file 
 	fileBytes, err := os.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	//define custom map
 	registry := map[string]elh.Runner {
 		"bash": &elh.ExternalRunner{
 			CmdName: "bash",
@@ -40,6 +53,7 @@ func renderFromRegistry(file string, w http.ResponseWriter, r *http.Request) {
 			Env:     os.Environ(),
 		},
 	}
+
 	res, err := elh.RenderWithRegistry(string(fileBytes), registry, r)
 	if err != nil {
 		log.Fatal(err)
