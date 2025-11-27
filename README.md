@@ -10,11 +10,11 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 ### Import module
 
 - The repo was created with capital letters, so it's recommended to import with an alias of `elh`:
-```go
-import (
-    elh "github.com/Supraboy981322/ELH"
-)
-```
+  ```go
+  import (
+      elh "github.com/Supraboy981322/ELH"
+  )
+  ```
 
 ---
 
