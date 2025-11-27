@@ -18,7 +18,7 @@ func Render(src string, r *http.Request) (string, error) {
 
 func MkReg(caller string, cmd string, args []string, timeout int, env []string) map[string]Runner {
 	reg := map[string]Runner {
-		caller: &ExternalRunner{
+		caller: &ExternalRunner {
 			CmdName: cmd,
 			Args:    args,
 			Timeout: time.Duration(timeout) * time.Second,
@@ -32,3 +32,4 @@ func MkRegDefaults(cmd string, args []string) map[string]Runner {
 	reg := MkReg(cmd, cmd, args, 5, os.Environ())
 	return reg
 }
+
