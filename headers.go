@@ -1,0 +1,5 @@
+package elh
+
+const (
+	vimHead = ""
+)
