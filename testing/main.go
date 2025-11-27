@@ -53,20 +53,20 @@ func renderFromRegistry(file string, w http.ResponseWriter, r *http.Request) {
 	//	registry := elh.MkReg("bash", "bash", []string{}, 5, os.Environ())
   //	registry := elh.MkRegDefaults("bash", []string{})
 	//  registry := elh.MkReg("bash", "bash', []string{}, 5, os.Environ())
-		registry := map[string]elh.Runner{
-			"bash": &elh.ExternalRunner{
-				CmdName: "bash",
-				Args:    []string{},
-				Timeout: 5 * time.Second,
-				Env:     os.Environ(),
-			},
-			"md": &elh.ExternalRunner{
-				CmdName: "marked",
-				Args:    []string{"-i"},
-				Timeout: 5 * time.Second,
-				Env:     os.Environ(),
-			},
-		}
+	registry := map[string]elh.Runner{
+		"bash": &elh.ExternalRunner{
+			CmdName: "bash",
+			Args:    []string{},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
+		"md": &elh.ExternalRunner{
+			CmdName: "marked",
+			Args:    []string{"-i"},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
+	}
 
 	res, err := elh.RenderWithRegistry(string(fileBytes), registry, r)
 	if err != nil {
