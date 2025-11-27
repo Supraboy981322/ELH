@@ -15,8 +15,13 @@ var (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Infof("[req]:  %s", r.RemoteAddr)
-		renderFromFileName("index.elh", w, r)
+		page, err := elh.Serve(w,r)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Infof("[req]:  %s  ;  %s", page, r.RemoteAddr)
+//    renderFromFileName("index.elh", w, r)
 //		renderFromRegistry("test.elh", w, r)
 	})
 
