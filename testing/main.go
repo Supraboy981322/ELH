@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-//	"time"
+	"time"
 	"net/http"
 	"github.com/charmbracelet/log"
 	elh "github.com/Supraboy981322/ELH"
@@ -44,8 +44,17 @@ func renderFromRegistry(file string, w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	//define custom map
-	registry := elh.MkRegDefaults("bash", []string{})
+	//make custom map
+  //	registry := elh.MkRegDefaults("bash", []string{})
+	//  registry := elh.MkReg("bash", "bash', []string{}, 5, os.Environ())
+	registry := map[string]elh.Runner{
+		"bash": &elh.ExternalRunner{
+			CmdName: "bash",
+			Args:    []string{},
+			Timeout: 5 * time.Second,
+			Env:     os.Environ(),
+		},
+	}
 
 	res, err := elh.RenderWithRegistry(string(fileBytes), registry, r)
 	if err != nil {
