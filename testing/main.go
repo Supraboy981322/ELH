@@ -8,15 +8,20 @@ import (
 	elh "github.com/Supraboy981322/ELH"
 	"github.com/Supraboy981322/gomn"
 )
-var gomnMap gomn.Map
+var (
+	gomnMap gomn.Map
+	port = "8080"
+)
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-//		renderFromFileName("test.elh", w, r)
-		renderFromRegistry("test.elh", w, r)
+		log.Infof("[req]:  %s", r.RemoteAddr)
+		renderFromFileName("../index.elh", w, r)
+//		renderFromRegistry("test.elh", w, r)
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Infof("listening on port %s", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 
@@ -25,7 +30,7 @@ func main() {
  * render from file name *
  * * * * * * * * * * * * */
 func renderFromFileName(file string, w http.ResponseWriter, r *http.Request) {
-	res, err := elh.RenderFile("test.elh", r)
+	res, err := elh.RenderFile(file, r)
 	if err != nil {
 		log.Fatal(err)
 	}
