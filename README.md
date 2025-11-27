@@ -16,6 +16,8 @@ import (
 )
 ```
 
+---
+
 ### Usage examples
 
 - list files in directory with Bash
