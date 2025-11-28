@@ -1,4 +1,4 @@
-package ELH
+package elh
 
 var (
 	libs = map[string]string{

@@ -1,4 +1,4 @@
-package ELH
+package elh
 
 import (
 	"fmt"
