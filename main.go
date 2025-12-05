@@ -18,6 +18,7 @@ var (
 		".elh",
 		".html",
 	}
+	WebDir string
 )
 
 type (

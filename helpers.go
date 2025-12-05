@@ -114,13 +114,16 @@ func checkIsDir(file string) (string, error) {
 func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[string]Runner) (string, error) {
 	//get the requested file
 	file := r.URL.Path
+	//set the system path of file
 	if file == "/" {
 		file = "index"
 	} else if file[len(file)-1:] ==  "/" {
 		file = fmt.Sprintf("%sindex", string(file[1:]))
+		file = filepath.Join(WebDir, file)
 		file, _ = checkIsDir(file)
 	} else {
 		file = file[1:]
+		file = filepath.Join(WebDir, file)
 		file, _ = checkIsDir(file)
 	}
 
