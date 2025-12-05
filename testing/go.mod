@@ -1,6 +1,6 @@
 module elh-test
 
-go 1.25.2
+go 1.25.4
 
 replace (
 	github.com/Supraboy981322/ELH => repo v0.0.0-00010101000000-0000000000
