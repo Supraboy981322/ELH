@@ -150,7 +150,7 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = RenderWithRegistry(fileStr, r, registry)
+			result, err = RenderWithRegistry(fileStr, registry, r)
 			if err != nil {
 				return file, errors.New("elh failed; "+err.Error())
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
