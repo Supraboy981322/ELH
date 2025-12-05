@@ -123,7 +123,6 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 	} else {
 		file = file[1:]
 		file = filepath.Join(WebDir, file)
-		fmt.Printf("WebDir=%s ; file=%s\n", WebDir, file)
 		file, _ = checkIsDir(file)
 	}
 
