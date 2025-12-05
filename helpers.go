@@ -90,7 +90,6 @@ func Serve(w http.ResponseWriter, r *http.Request) (string, error) {
 		}
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
-		fmt.Printf("resp:  forbidden\n\n")
 		file = "404 forbidden" 
 	}
 	return file, nil
@@ -124,6 +123,7 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 	} else {
 		file = file[1:]
 		file = filepath.Join(WebDir, file)
+		fmt.Printf("WebDir=%s ; file=%s\n", WebDir, file)
 		file, _ = checkIsDir(file)
 	}
 
@@ -167,7 +167,6 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 		}
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
-		fmt.Printf("resp:  forbidden\n\n")
 		file = "404 forbidden" 
 	}
 	return file, nil
