@@ -5,6 +5,7 @@ import (
 //	"strconv"
 	"strings"
 	"net/http"
+//	"encoding/json"
 	"path/filepath"
 )
 
@@ -99,6 +100,12 @@ func formatHeaders(r *http.Request, lang string) string {
 			}
 		}
 		headArr += "}"
+	case "bash":
+/*		jsonHeaders, err := json.Marshal(r.Header)
+		if err != nil {
+			return err.Error()
+		}
+		headArr = string(jsonHeaders)*/
 	default:
 	}
 	return headArr
@@ -141,7 +148,7 @@ func genLib(lang string, r *http.Request, tmpDir string) error {
 		if err != nil {
 			return err
 		}
-	default:
+  default:
 	}
 	return nil
 }
