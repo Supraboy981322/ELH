@@ -236,6 +236,9 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 	file = "\033[35m"+file+"\033[0m"
 
 	if Logger != nil {
-		Logger("\033[1m[req]:\033[0m "+file+" | \033[1m[resp]:\033[0m "+resp)
+		logStr := "\033[1m[req]:\033[0m "
+		logStr += file+" | "
+		logStr += "\033[1m[resp]:\033[0m "+resp
+		Logger(logStr)
 	}
 }
