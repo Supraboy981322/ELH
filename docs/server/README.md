@@ -21,5 +21,8 @@
     }
   }
   ```
+  This function automatically handles http get requests to the server, so your project can just serve files without having to write the singular function to do it yourself.
+
+---
 
 For the function signatures see [this doc](https://github.com/Supraboy981322/ELH/tree/master/docs/server/funcs.md)
