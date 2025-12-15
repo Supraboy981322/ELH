@@ -21,7 +21,7 @@
     }
   }
   ```
-  This function automatically handles http get requests to the server, so your project can just serve files without having to write the singular function to do it yourself.
+  This function automatically handles http GET requests to the server, so your project can just serve files without having to write the singular function to do it yourself.
 
 ---
 
