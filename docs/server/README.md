@@ -1,6 +1,6 @@
 # ELH: Server Doc
 
-## Helper functions
+## Helper function usage examples
 
 - HTTP server handler
   ```go
