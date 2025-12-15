@@ -172,6 +172,7 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 }
 
 func HttpServer(w http.ResponseWriter, r *http.Request) {
+	var resp string
 	//get the requested file
 	file := r.URL.Path
 	if file == "/" {
@@ -198,6 +199,7 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 				break
 			} else if !errors.Is(err, os.ErrNotExist) {
 				http.Error(w, "cannot check if file exists! Schrodinger's file:  "+err.Error(), http.StatusInternalServerError)
+				resp = "500; Schrodinger's file"
 			}
 		}
 	}
@@ -205,6 +207,7 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 		fileByte, err := os.ReadFile(file)
 		if err != nil {
 			http.Error(w, "read file:  "+err.Error(), http.StatusInternalServerError)
+			resp = "500; err reading file"
 		}
 		fileStr := string(fileByte)
 		var result string
@@ -214,6 +217,7 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
+				resp = "500; problem with elh file"
 			}
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintln(w, result)
@@ -223,6 +227,15 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		http.Error(w, "404 forbidden", http.StatusForbidden)
-		file = "404 forbidden" 
+		resp = "404 forbidden"
+	}
+
+	if resp == "" { resp = "\033[32m"+file+"\033[0m"
+	} else { resp = "\033[31m"+resp+"\033[0m" }
+
+	file = "\033[35m"+file+"\033[0m"
+
+	if Logger != nil {
+		Logger("\033[1m[req]:\033[0m "+file+" | \033[1m[resp]:\033[0m "+resp)
 	}
 }

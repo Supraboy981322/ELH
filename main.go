@@ -19,6 +19,7 @@ var (
 		".html",
 	}
 	WebDir string
+	Logger func(string)
 )
 
 type (
