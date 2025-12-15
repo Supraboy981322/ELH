@@ -13,8 +13,13 @@
   )
 
   func main() {
+    //optional: set a logger for incoming requests
     elh.Logger = func(str string) { log.Print(str) }
+
+    //create the http handler
     http.HandleFunc("/", elh.HttpServer)
+
+    //start the server 
     err := http.ListenAndServe(":8080", nil)
     if err != nil {
       log.Fatal("server failed:  %v", err)
