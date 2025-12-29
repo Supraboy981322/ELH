@@ -73,14 +73,40 @@ func (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error) 
 		cmd.Env = r.Env
 	}
 
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
+	var stdout_buf, stderr_buf bytes.Buffer
+	var stderrWr, stdoutWr io.Writer
+	stdoutWr = &stdout_buf
+	stderrWr = &stderr_buf
+	if RenderStderr {
+		stdoutWr = io.MultiWriter(stderrWr, stdoutWr)
+		if Log.Runner.LogStderr {
+			if Log.Runner.LogStderrToStdout {
+				cmd.Stderr = io.MultiWriter(os.Stdout, stdoutWr)
+			} else {
+				cmd.Stderr = io.MultiWriter(os.Stderr, stdoutWr)
+			}
+		} else {
+			cmd.Stderr = stdoutWr
+		}
+	} else {
+		if Log.Runner.LogStderr {
+			stderrOutput := os.Stderr
+			if Log.Runner.LogStderrToStdout {
+				stderrOutput = os.Stdout
+			}
+			stderrWr = io.MultiWriter(stderrOutput, &stderr_buf)
+		} else {
+			stderrWr = &stderr_buf
+		}
+		cmd.Stderr = stderrWr
+	}
+
+	cmd.Stdout = stdoutWr
 
 	err = cmd.Run()
 
-	stderrStr := stderr.String()
-	stdoutStr := stdout.String()
+	stderrStr := stderr_buf.String()
+	stdoutStr := stdout_buf.String()
 	
 	//context exceeds timeout, classify as such
 	if ctx.Err() == context.DeadlineExceeded {
@@ -92,7 +118,6 @@ func (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error) 
 		errRet := fmt.Errorf("exec:  %w", err)
 		return stdoutStr, stderrStr, errRet 
 	}
-
 	
 	return stdoutStr, stderrStr, nil 
 }

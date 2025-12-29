@@ -238,12 +238,12 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 	file = "\033[35m"+file+"\033[0m"
 
 	//check if logger is set
-	if Logger != nil {
+	if Log.Func != nil {
 		//build string
 		logStr := "\033[1m[req]:\033[0m "
 		logStr += file+" | "
 		logStr += "\033[1m[resp]:\033[0m "+resp
 		//log it
-		Logger(logStr)
+		Log.Func(logStr)
 	}
 }

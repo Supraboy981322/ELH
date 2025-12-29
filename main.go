@@ -12,6 +12,16 @@ const (
 	port = "8080"	
 )
 
+type (
+	Logger struct {
+		Func func(string)
+		Runner struct {
+			LogStderr bool
+			LogStderrToStdout bool
+		}
+	}
+)
+
 var (
 	//for urls with no file format 
 	suppNoExt = []string{
@@ -19,7 +29,8 @@ var (
 		".html",
 	}
 	WebDir string
-	Logger func(string)
+	Log Logger
+	RenderStderr bool
 )
 
 type (
