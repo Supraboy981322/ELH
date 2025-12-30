@@ -61,6 +61,11 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 			code = head + "\n" + code
 		}
 		code = code + "\nqall!"
+	case "bash":
+		head := `
+source `+
+		filepath.Join(tmpDir, "elhLib.bash")
+		code = head + code
 	default:
 	}
 	return code
@@ -128,23 +133,29 @@ func fmtdHead(r *http.Request, lang string) string {
 }
 
 func genLib(lang string, r *http.Request, tmpDir string) error {
-	headers := fmtdHead(r, lang)
+//	headers := fmtdHead(r, lang)
 	switch (lang) {
 	case "vim":
-		libArr := []string{
-			"let s:Headers = " + headers + "\n",
-			"let s:Params = { 'TODO': 'TODO' }\n",
-			"let elh = {",
-			" 'Headers': s:Headers,",
-			" 'Params': s:Params,",
-			" }\n",
-		}
-		var libCont string
-		for i := 0; i < len(libArr); i++ {
-			libCont += libArr[i]
-		}
+		libCont := []byte(`
+let s:Headers = " + headers + "
+let s:Params = { 'TODO': 'TODO' }
+let elh = { 'Headers': s:Headers, 'Params': s:Params, }
+`)
 		libName := filepath.Join(tmpDir, "elhLib.vim")
-		err := os.WriteFile(libName, []byte(libCont), 0644)
+		err := os.WriteFile(libName, libCont, 0644)
+		if err != nil {
+			return err
+		}
+	 case "bash":
+		libCont := []byte(`
+elhlog() (
+	set -euo pipefail
+	printf "${@}" 1>&2
+	printf "\n" 1>&2
+)
+`)
+		libName := filepath.Join(tmpDir, "elhLib.bash")
+		err := os.WriteFile(libName, libCont, 0644)
 		if err != nil {
 			return err
 		}
