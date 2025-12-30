@@ -19,12 +19,12 @@ type ExternalRunner struct {
 	Timeout time.Duration  //command timeout
 	Env []string           //nil to use os.Environ()
 	WorkDir string         //working dir
-	Func func(code string, tmp *os.File) (stdout, stderr string, err error)
+	Func func(code string, tmp *os.File, req *http.Request) (stdout, stderr string, err error)
 }
 
-func (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error) {
+func (r *ExternalRunner) Run(code string, tmp *os.File, req *http.Request) (string, string, error) {
 	if r.Func != nil {
-		stdout, stderr, err := r.Func(code, tmp)
+		stdout, stderr, err := r.Func(code, tmp, req)
 		return stdout, stderr, err
 	}
 	var err error 
@@ -193,35 +193,23 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request) (str
 			return "", ret
 		};defer os.RemoveAll(tmpDir)
 
-		var stdout, stderr string
-/*		if r.Func != nil {
-			tmpName := fmt.Sprintf(filepath.Base(tmpDir))
-			tmp, err := os.Create(filepath.Join(tmpDir, fileName))
-			if err != nil {
-				return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
-			}
-			stdout, stderr, err = r.Func(code, tmp, req)
-			if err != nil {
-				return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
-			}
-		} else */{
-			err = genLib(lang, req, tmpDir)
-			if err != nil {
-				_, _, ret := errRun("create temporary file", err)
-				return "", ret
-			}
-			
-			tmp := prepForLangsWithOddReqs(lang, tmpDir)
-
-			code = formatCode(code, lang, tmp.Name(), tmpDir)
-		
-			stdout, stderr, err = r.Run(code, tmp)
-			if err != nil {
-				return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
-			}
-
-			stdout = formatSTD(lang, stdout)
+		err = genLib(lang, req, tmpDir)
+		if err != nil {
+			_, _, ret := errRun("create temporary file", err)
+			return "", ret
 		}
+		
+		tmp := prepForLangsWithOddReqs(lang, tmpDir)
+
+		code = formatCode(code, lang, tmp.Name(), tmpDir)
+	
+		stdout, stderr, err := r.Run(code, tmp, req)
+		if err != nil {
+			return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
+		}
+
+		stdout = formatSTD(lang, stdout)
+
 		out.WriteString(stdout)
 		i = end + 2
 	}

@@ -22,7 +22,7 @@ var (
 
 type (
 	Runner interface {
-		Run(code string, tmp *os.File) (stdout string, stderr string, err error)
+		Run(code string, tmp *os.File, req *http.Request) (stdout string, stderr string, err error)
 	}
 	Logger struct {
 		Func func(string)
