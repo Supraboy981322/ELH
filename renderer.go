@@ -24,7 +24,8 @@ type ExternalRunner struct {
 
 func (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error) {
 	if r.Func != nil {
-		return r.Func(code, tmp)
+		stdout, stderr, err := r.Func(code, tmp)
+		return stdout, stderr, err
 	}
 	var err error 
 	ctx := context.Background() 
