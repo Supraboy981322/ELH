@@ -32,10 +32,8 @@ func DefaultRegistry() map[string]Runner {
 			Env:     os.Environ(),
 		},
 		"lua": &ExternalRunner{
-			CmdName: "lua",
-			Args:    []string{},
 			Timeout: 5 * time.Second,
-			Env:     os.Environ(),
+			Func: luaRunner,
 		},
 		"go": &ExternalRunner{
 			CmdName: "go",
