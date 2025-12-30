@@ -8,21 +8,8 @@ import (
 	"path/filepath"
 )
 
-const (
-	port = "8080"	
-)
-
-type (
-	Logger struct {
-		Func func(string)
-		Runner struct {
-			LogStderr bool
-			LogStderrToStdout bool
-		}
-	}
-)
-
 var (
+	Port = "8080"	
 	//for urls with no file format 
 	suppNoExt = []string{
 		".elh",
@@ -36,6 +23,13 @@ var (
 type (
 	Runner interface {
 		Run(code string, tmp *os.File) (stdout string, stderr string, err error)
+	}
+	Logger struct {
+		Func func(string)
+		Runner struct {
+			LogStderr bool
+			LogStderrToStdout bool
+		}
 	}
 )
 
