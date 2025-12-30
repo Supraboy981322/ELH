@@ -21,8 +21,14 @@ var (
 )
 
 type (
+	RunOpts struct {
+		Code string
+		TmpDir string
+		TmpFile *os.File
+		Req *http.Request
+	}
 	Runner interface {
-		Run(code string, tmp *os.File, req *http.Request) (stdout string, stderr string, err error)
+		Run(runOpts RunOpts) (stdout string, stderr string, err error)
 	}
 	Logger struct {
 		Func func(string)
