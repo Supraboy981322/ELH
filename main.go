@@ -9,16 +9,12 @@ import (
 )
 
 var (
-	Port = "8080"	
 	//for urls with no file format 
 	suppNoExt = []string{
 		".elh",
 		".html",
 	}
-	WebDir string
-	Log Logger
-	ErrPage []byte
-	RenderStderr bool
+	Server ServerOpts
 	sysout = os.Stdout
 	syserr = os.Stderr
 )
@@ -41,6 +37,14 @@ type (
 			LogStderr bool
 			LogStderrToStdout bool
 		}
+	}
+	ServerOpts struct {
+		Port int	
+		Serve func() error
+		WebDir string
+		Log Logger
+		ErrPage []byte
+		RenderStderr bool
 	}
 )
 

@@ -80,8 +80,8 @@ func Serve(w http.ResponseWriter, r *http.Request) (string, error) {
 			result, err = Render(fileStr, r, w)
 			if err != nil {
 				var fileStr string
-				if ErrPage != nil {
-					fileStr, err = Render(string(ErrPage), r, w) 
+				if Server.ErrPage != nil {
+					fileStr, err = Render(string(Server.ErrPage), r, w) 
 					if err != nil {
 						http.Error(w, "500 server err", 500)
 						return "500", err
@@ -100,8 +100,8 @@ func Serve(w http.ResponseWriter, r *http.Request) (string, error) {
 	} else {
 		var err error
 		var fileStr string
-		if ErrPage != nil {
-			fileStr, err = Render(string(ErrPage), r, w) 
+		if Server.ErrPage != nil {
+			fileStr, err = Render(string(Server.ErrPage), r, w) 
 			if err != nil {
 				http.Error(w, "500 server err", 500)
 				return "500", err
@@ -136,11 +136,11 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 		file = "index"
 	} else if file[len(file)-1:] ==  "/" {
 		file = fmt.Sprintf("%sindex", string(file[1:]))
-		file = filepath.Join(WebDir, file)
+		file = filepath.Join(Server.WebDir, file)
 		file, _ = checkIsDir(file)
 	} else {
 		file = file[1:]
-		file = filepath.Join(WebDir, file)
+		file = filepath.Join(Server.WebDir, file)
 		file, _ = checkIsDir(file)
 	}
 
@@ -173,8 +173,8 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 			result, err = RenderWithRegistry(fileStr, registry, r, w)
 			if err != nil {
 				var fileStr string
-				if ErrPage != nil {
-					fileStr, err = Render(string(ErrPage), r, w) 	
+				if Server.ErrPage != nil {
+					fileStr, err = Render(string(Server.ErrPage), r, w) 	
 					if err != nil {
 						http.Error(w, "500 server err", 500)
 						return "500", err
@@ -193,8 +193,8 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 	} else {
 		var err error
 		var fileStr string
-		if ErrPage != nil {
-			fileStr, err = Render(string(ErrPage), r, w) 
+		if Server.ErrPage != nil {
+			fileStr, err = Render(string(Server.ErrPage), r, w) 
 			if err != nil {
 				http.Error(w, "500 server err", 500)
 				return "500", err
@@ -263,8 +263,8 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 	} else {
 		var err error
 		var fileStr string
-		if ErrPage != nil {
-			fileStr, err = Render(string(ErrPage), r, w)
+		if Server.ErrPage != nil {
+			fileStr, err = Render(string(Server.ErrPage), r, w)
 			if err != nil {
 				http.Error(w, "500 server err", 500)
 				return
@@ -282,21 +282,21 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 	file = "\033[35m"+file+"\033[0m"
 
 	//check if logger is set
-	if Log.Func != nil {
+	if Server.Log.Func != nil {
 		//build string
 		logStr := "\033[1m[req]:\033[0m "
 		logStr += file+" | "
 		logStr += "\033[1m[resp]:\033[0m "+resp
 		//log it
-		Log.Func(logStr)
+		Server.Log.Func(logStr)
 	}
 }
 
 func UseDefault(name string) *ExternalRunner {
 	reg := DefaultRegistry()[name]
 	if reg == nil {
-		if Log.Func != nil {
-			Log.Func("runner not in registry:  \n"+name)
+		if Server.Log.Func != nil {
+			Server.Log.Func("runner not in registry:  \n"+name)
 			os.Exit(1)
 		}
 		fmt.Fprintf(syserr, "runner not in registry:  %s\n", name)
