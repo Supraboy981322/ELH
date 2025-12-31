@@ -4,8 +4,11 @@ import (
 	"io"
 	"os"
 	"fmt"
+	"slices"
+	"strings"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
+	"github.com/Supraboy981322/gomn"
 )
 
 func mdRunner(opts RunOpts) (string, string, error) {
@@ -60,4 +63,49 @@ func luaRunner(opts RunOpts) (string, string, error) {
 	};errR.Close()
 
 	return string(outF), string(errF), err
+}
+
+func gomnParser(opts RunOpts) (string, string, error) {
+	var file string
+	var path []string
+	args := toArgs(opts.Code)
+
+	var taken []int
+	for i, arg := range args {
+		if !slices.Contains(taken, i) {
+			switch arg {
+			 case "-f":
+				if len(args) <= i+1 {
+					err := fmt.Errorf("called %s arg, but no value provided", arg)
+					return "", "", err
+				}
+				file = args[i+1]
+				taken = append(taken, i+1)
+			 default:
+				path = append(path, arg)
+			}
+		}
+	}
+
+	if file == "-" { file = "" }
+	inB, err := os.ReadFile(file)
+	if err != nil { return "", "failed to read file", err }
+	in := string(inB)
+
+	GOMN, err := gomn.Parse(in)
+	if err != nil {
+		return "", "failed to parse gomn", fmt.Errorf("\r%v", err)
+	}
+
+	var resA any
+	cur := GOMN
+	for _, p := range path {
+		if n, ok := cur[p].(gomn.Map); ok {
+				cur = n
+		} else { resA = cur[p] }
+	}
+
+	res := fmt.Sprint(resA)
+
+	return res, strings.Join(args, " "), nil
 }
