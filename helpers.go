@@ -363,3 +363,41 @@ func (opts *RunOpts) Unwrap() (string, string, *os.File, *http.Request, http.Res
 	wr := opts.Wr
 	return code, tmpDir, tmpFile, req, wr
 }
+
+func splitLines(src string, split_on []string) ([]string) {
+	if split_on == nil { split_on = []string{} }
+	split_on = append(split_on, "\n")
+	type pa struct {
+		mem string
+		out []string
+		pos int
+		in []string
+		esc bool
+		split []string
+	};p := pa{
+		in: strings.Split(src, ""),
+		split: split_on,
+	}
+	var foo func(p pa) []string
+	foo = func(p pa) []string {
+		if p.pos >= len(p.in) {
+			p.out = append(p.out, p.mem)
+			return p.out
+		}
+		switch p.in[p.pos] {
+		 case "'", `"`:
+			p.esc = !p.esc ; p.mem += p.in[p.pos]
+		 default:
+			var s bool
+			for _, c := range p.split {
+				if p.in[p.pos] == c {
+					p.out = append(p.out, p.mem)
+					p.mem = "" ; s = true ; break
+				}
+			};if !s { p.mem += p.in[p.pos] }
+		}
+		p.pos++
+		return foo(p)
+	}
+	return foo(p)
+}
