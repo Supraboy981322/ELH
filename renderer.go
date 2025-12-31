@@ -89,18 +89,18 @@ func (r *ExternalRunner) Run(runOpts RunOpts) (string, string, error) {
 		stdoutWr = io.MultiWriter(stderrWr, stdoutWr)
 		if Log.Runner.LogStderr {
 			if Log.Runner.LogStderrToStdout {
-				cmd.Stderr = io.MultiWriter(os.Stdout, stdoutWr)
+				cmd.Stderr = io.MultiWriter(sysout, stdoutWr)
 			} else {
-				cmd.Stderr = io.MultiWriter(os.Stderr, stdoutWr)
+				cmd.Stderr = io.MultiWriter(syserr, stdoutWr)
 			}
 		} else {
 			cmd.Stderr = stdoutWr
 		}
 	} else {
 		if Log.Runner.LogStderr {
-			stderrOutput := os.Stderr
+			stderrOutput := syserr
 			if Log.Runner.LogStderrToStdout {
-				stderrOutput = os.Stdout
+				stderrOutput = sysout
 			}
 			stderrWr = io.MultiWriter(stderrOutput, &stderr_buf)
 		} else {

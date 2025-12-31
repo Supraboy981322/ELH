@@ -30,7 +30,7 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 			head = "package main\n"
 		}
 		code = head + code
-		os.Stdout.WriteString(code)
+		sysout.WriteString(code)
 	case "php":
 		code = "<?php\n" + code + "\n?>"
 	case "py":
@@ -167,7 +167,6 @@ elhlog() (
 func getImpsBetween(code string, start string, end string) []string {
 	res := []string{""}
 	
-//	os.Stdout.WriteString(strconv.Itoa(1))
 	star := strings.Index(code, start)
 	if star == -1 {
 //		res[0] = code
@@ -175,14 +174,12 @@ func getImpsBetween(code string, start string, end string) []string {
 	}
 	star += len (start)
 
-//	os.Stdout.WriteString(strconv.Itoa(2))
 	en := strings.Index(code[star:], end)
 	if en == -1 {
 		res[0] = code
 		return res
 	}
 
-//	os.Stdout.WriteString(strconv.Itoa(3))
 	res[0] = code[star : star+en]
 	res = strings.Split(res[0], " ; ")
 	return res

@@ -18,6 +18,8 @@ var (
 	WebDir string
 	Log Logger
 	RenderStderr bool
+	sysout = os.Stdout
+	syserr = os.Stderr
 )
 
 type (

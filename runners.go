@@ -21,8 +21,6 @@ func mdRunner(opts RunOpts) (string, string, error) {
 }
 
 func luaRunner(opts RunOpts) (string, string, error) {
-	sysout, syserr := os.Stdout, os.Stderr
-
 	outR, outW, err := os.Pipe()
 	if err != nil {
 		fmt.Println(err)
@@ -30,7 +28,7 @@ func luaRunner(opts RunOpts) (string, string, error) {
 	}
 	errR, errW, err := os.Pipe()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "lua failed:  %v", err)
+		fmt.Fprintf(syserr, "lua failed:  %v", err)
 		return "", "", err
 	}
 
@@ -40,8 +38,8 @@ func luaRunner(opts RunOpts) (string, string, error) {
 	lua.OpenLibraries(l)
 	
 	if err := lua.DoString(l, opts.Code); err != nil {
-		os.Stdout, os.Stderr= sysout, syserr
-		fmt.Fprintf(os.Stderr, "lua failed:  %v", err)
+		os.Stdout, os.Stderr = sysout, syserr
+		fmt.Fprintf(syserr, "lua failed:  %v", err)
 		return "", "", err
 	}
 	os.Stdout, os.Stderr = sysout, syserr
@@ -51,13 +49,13 @@ func luaRunner(opts RunOpts) (string, string, error) {
 	outF, err := io.ReadAll(outR)
 	if err != nil {
 		outR.Close()
-		fmt.Fprintf(os.Stderr, "lua failed:  %v", err)
+		fmt.Fprintf(syserr, "lua failed:  %v", err)
 		return "", "", err
 	};outR.Close()
 	errF, err := io.ReadAll(errR)
 	if err != nil {
 		errR.Close()
-		fmt.Fprintf(os.Stderr, "lua failed:  %v", err)
+		fmt.Fprintf(syserr, "lua failed:  %v", err)
 		return string(outF), "", err
 	};errR.Close()
 
