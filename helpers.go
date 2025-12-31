@@ -381,7 +381,10 @@ func splitLines(src string, split_on []string) ([]string) {
 	var foo func(p pa) []string
 	foo = func(p pa) []string {
 		if p.pos >= len(p.in) {
-			p.out = append(p.out, p.mem)
+			p.mem = strings.TrimSpace(p.mem)
+			if len(p.mem) != 0 {
+				p.out = append(p.out, p.mem)
+			}
 			return p.out
 		}
 		switch p.in[p.pos] {
@@ -391,7 +394,10 @@ func splitLines(src string, split_on []string) ([]string) {
 			var s bool
 			for _, c := range p.split {
 				if p.in[p.pos] == c {
-					p.out = append(p.out, p.mem)
+					p.mem = strings.TrimSpace(p.mem)
+					if len(p.mem) != 0 {
+						p.out = append(p.out, p.mem)
+					}
 					p.mem = "" ; s = true ; break
 				}
 			};if !s { p.mem += p.in[p.pos] }
