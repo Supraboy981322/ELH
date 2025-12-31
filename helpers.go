@@ -293,8 +293,16 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 }
 
 func UseDefault(name string) *ExternalRunner {
-	reg := DefaultRegistry()[name].GetRunner()
-	return reg
+	reg := DefaultRegistry()[name]
+	if reg == nil {
+		if Log.Func != nil {
+			Log.Func("runner not in registry:  \n"+name)
+			os.Exit(1)
+		}
+		fmt.Fprintf(syserr, "runner not in registry:  %s\n", name)
+		os.Exit(1)
+	}
+	return reg.GetRunner()
 }
 
 func ToArgs(src string, by string) []string {
