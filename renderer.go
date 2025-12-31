@@ -134,7 +134,7 @@ func (r *ExternalRunner) Run(runOpts RunOpts) (string, string, error) {
 	return stdoutStr, stderrStr, nil 
 }
 
-func parseAndRun(src string, registry map[string]Runner, req *http.Request) (string, error) {
+func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr http.ResponseWriter) (string, error) {
 	var out strings.Builder
 	i := 0
 	n := len(src)
@@ -215,6 +215,7 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request) (str
 			TmpDir: tmpDir,
 			TmpFile: tmp,
 			Req: req,
+			Wr: wr, 
 		}
 		stdout, stderr, err := r.Run(runOpts)
 		if err != nil {

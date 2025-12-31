@@ -12,13 +12,13 @@ import (
 )
 
 // render src with specific registery
-func RenderWithRegistry(src string, registry map[string]Runner, r *http.Request) (string, error) {
-	return parseAndRun(src, registry, r)
+func RenderWithRegistry(src string, registry map[string]Runner, r *http.Request, wr http.ResponseWriter) (string, error) {
+	return parseAndRun(src, registry, r, wr)
 }
 
 // wrapper that uses the DefaultRegistry.
-func Render(src string, r *http.Request) (string, error) {
-	return RenderWithRegistry(src, DefaultRegistry(), r)
+func Render(src string, r *http.Request, wr http.ResponseWriter) (string, error) {
+	return RenderWithRegistry(src, DefaultRegistry(), r, wr)
 }
 
 func MkReg(caller string, cmd string, args []string, timeout int, env []string) map[string]Runner {
@@ -77,11 +77,19 @@ func Serve(w http.ResponseWriter, r *http.Request) (string, error) {
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = Render(fileStr, r)
+			result, err = Render(fileStr, r, w)
 			if err != nil {
+				var fileStr string
+				if ErrPage != nil {
+					fileStr, err = Render(string(ErrPage), r, w) 
+					if err != nil {
+						http.Error(w, "500 server err", 500)
+						return "500", err
+					}
+				} else { fileStr = "500 server err" }
+				http.Error(w, fileStr, 500)
+				file = "500 server err" 
 				return file, errors.New("elh failed; "+err.Error())
-				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
 			}
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintln(w, result)
@@ -90,7 +98,16 @@ func Serve(w http.ResponseWriter, r *http.Request) (string, error) {
 			http.ServeContent(w, r, file, time.Now(), fileReader)
 		}
 	} else {
-		http.Error(w, "404 forbidden", http.StatusForbidden)
+		var err error
+		var fileStr string
+		if ErrPage != nil {
+			fileStr, err = Render(string(ErrPage), r, w) 
+			if err != nil {
+				http.Error(w, "500 server err", 500)
+				return "500", err
+			}
+		} else { fileStr = "404 forbidden" }
+		http.Error(w, fileStr, 404)
 		file = "404 forbidden" 
 	}
 	return file, nil
@@ -153,11 +170,19 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = RenderWithRegistry(fileStr, registry, r)
+			result, err = RenderWithRegistry(fileStr, registry, r, w)
 			if err != nil {
+				var fileStr string
+				if ErrPage != nil {
+					fileStr, err = Render(string(ErrPage), r, w) 	
+					if err != nil {
+						http.Error(w, "500 server err", 500)
+						return "500", err
+					}
+				} else { fileStr = "500 server err" }
+				http.Error(w, fileStr, 500)
+				file = "500 server err" 
 				return file, errors.New("elh failed; "+err.Error())
-				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
 			}
 			w.Header().Set("Content-Type", "text/html")
 			fmt.Fprintln(w, result)
@@ -166,7 +191,16 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 			http.ServeContent(w, r, file, time.Now(), fileReader)
 		}
 	} else {
-		http.Error(w, "404 forbidden", http.StatusForbidden)
+		var err error
+		var fileStr string
+		if ErrPage != nil {
+			fileStr, err = Render(string(ErrPage), r, w) 
+			if err != nil {
+				http.Error(w, "500 server err", 500)
+				return "500", err
+			}
+		} else { fileStr = "404 forbidden" }
+		http.Error(w, fileStr, 404)
 		file = "404 forbidden" 
 	}
 	return file, nil
@@ -214,7 +248,7 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = Render(fileStr, r)
+			result, err = Render(fileStr, r, w)
 			if err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
@@ -227,8 +261,17 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 			http.ServeContent(w, r, file, time.Now(), fileReader)
 		}
 	} else {
-		http.Error(w, "404 forbidden", http.StatusForbidden)
-		resp = "404 forbidden"
+		var err error
+		var fileStr string
+		if ErrPage != nil {
+			fileStr, err = Render(string(ErrPage), r, w)
+			if err != nil {
+				http.Error(w, "500 server err", 500)
+				return
+			}
+		} else { fileStr = "404 forbidden" }
+		http.Error(w, fileStr, 404)
+		file = "404 forbidden" 
 	}
 
 	//colorize response log string
@@ -254,7 +297,7 @@ func UseDefault(name string) *ExternalRunner {
 	return reg
 }
 
-func toArgs(src string) []string {
+func toArgs(src string, by string) []string {
 	type argParser struct{
 		quot bool
 		esc bool
@@ -288,7 +331,7 @@ func toArgs(src string) []string {
 		switch cur {
      case `\`: p.esc = true
 	   case `"`, `'`: p.quot = true
-		 case " ":
+		 case by:
 			p.out = append(p.out, p.mem)
 			p.mem = ""
 		 default: p.mem += cur
@@ -297,4 +340,13 @@ func toArgs(src string) []string {
 		return foo(p)
 	}
 	return foo(p)
+}
+
+func (opts *RunOpts) Unwrap() (string, string, *os.File, *http.Request, http.ResponseWriter) {
+	code := opts.Code
+	tmpDir := opts.TmpDir
+	tmpFile := opts.TmpFile
+	req := opts.Req
+	wr := opts.Wr
+	return code, tmpDir, tmpFile, req, wr
 }

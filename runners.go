@@ -67,7 +67,7 @@ func luaRunner(opts RunOpts) (string, string, error) {
 func gomnParser(opts RunOpts) (string, string, error) {
 	var file string
 	var path []string
-	args := toArgs(opts.Code)
+	args := toArgs(opts.Code, " ")
 
 	var taken []int
 	for i, arg := range args {
@@ -106,5 +106,13 @@ func gomnParser(opts RunOpts) (string, string, error) {
 
 	res := fmt.Sprint(resA)
 
+	return res, "", nil
+}
+
+func elhRunner(opts RunOpts) (string, string, error) {
+	var res string
+	argv := toArgs(opts.Code, ".")
+	argn := len(argv)
+	_ = argn
 	return res, "", nil
 }

@@ -17,6 +17,7 @@ var (
 	}
 	WebDir string
 	Log Logger
+	ErrPage []byte
 	RenderStderr bool
 	sysout = os.Stdout
 	syserr = os.Stderr
@@ -28,6 +29,7 @@ type (
 		TmpDir string
 		TmpFile *os.File
 		Req *http.Request
+		Wr http.ResponseWriter
 	}
 	Runner interface {
 		Run(runOpts RunOpts) (stdout string, stderr string, err error)
@@ -42,7 +44,7 @@ type (
 	}
 )
 
-func RenderFile(file string, r *http.Request) ([]byte, error) {
+func RenderFile(file string, r *http.Request, w http.ResponseWriter) ([]byte, error) {
 	//get the extension of the requested file
 	ext := filepath.Ext(file)	
 	if ext == "" { //if there is no ext
@@ -69,7 +71,7 @@ func RenderFile(file string, r *http.Request) ([]byte, error) {
 	//if the file is elh, parse it
 	if ext == ".elh" {
 		fileStr := string(fileByte)
-		result, err := Render(fileStr, r)
+		result, err := Render(fileStr, r, w)
 		if err != nil {
 			return nil, errors.New("elh failed:  "+err.Error())
 		}
