@@ -297,7 +297,7 @@ func UseDefault(name string) *ExternalRunner {
 	return reg
 }
 
-func toArgs(src string, by string) []string {
+func ToArgs(src string, by string) []string {
 	type argParser struct{
 		quot bool
 		esc bool
