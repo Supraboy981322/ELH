@@ -305,7 +305,6 @@ func ToArgs(src string, by string) []string {
 		mem string
 		out []string
 		in []string
-		eof func() bool
 	};p := argParser{
 		quot: false,
 		esc: false,
@@ -317,7 +316,11 @@ func ToArgs(src string, by string) []string {
 
 	var foo func(p argParser) []string
 	foo = func(p argParser) []string {
-		if p.pos >= len(p.in) { return p.out }
+		if p.pos >= len(p.in) {
+			p.out = append(p.out, p.mem)
+			return p.out
+		}
+		fmt.Println(p.in[p.pos])
 		cur := p.in[p.pos]
 		if p.esc || p.quot {
 			if p.quot && (cur == `"` || cur == `'`) {
