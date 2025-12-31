@@ -215,7 +215,9 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr h
 			TmpDir: tmpDir,
 			TmpFile: tmp,
 			Req: req,
-			Wr: wr, 
+			Wr: wr,
+			Lang: lang,
+			Registry: registry,
 		}
 		stdout, stderr, err := r.Run(runOpts)
 		if err != nil {
