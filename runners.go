@@ -5,7 +5,6 @@ import (
 	"os"
 	"fmt"
 	"slices"
-	"strings"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
 	"github.com/Supraboy981322/gomn"
@@ -107,5 +106,5 @@ func gomnParser(opts RunOpts) (string, string, error) {
 
 	res := fmt.Sprint(resA)
 
-	return res, strings.Join(args, " "), nil
+	return res, "", nil
 }
