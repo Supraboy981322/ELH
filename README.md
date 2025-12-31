@@ -50,9 +50,9 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - Python
   - [python3](https://python.org/)
 - Markdown
-  - [marked](https://github.com/markedjs/marked)
+  - built-in ([thanks to the gomarkdown package](github.com/gomarkdown/markdown))
 - Lua
-  - [lua](https://lua.org)
+  - built-in ([thanks to the Shopify go-lua package](github.com/Shopify/go-lua))
 - Brainfuck
   - beef
 - Go
@@ -69,6 +69,8 @@ Freely embed various programming languages into HTML; like PHP, but without bein
   - bwbasic
 - VimScript
   - [VIMc](https://github.com/Supraboy981322/vimc/)
+- gomn (parser)
+  - built-in ([thanks to the gomn package](https://github.com/Supraboy981322/gomn))
 
 ---
 
