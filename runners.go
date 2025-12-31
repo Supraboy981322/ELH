@@ -119,9 +119,11 @@ func elhRunner(opts RunOpts) (string, string, error) {
 		return "", "no arg", err
 	}
 	type pa struct{
+		esc bool
 		pos int
-		mem2 int
+		memInt int
 		mem string
+		mem2 []string
 		in []string
 		out string
 	}
@@ -133,32 +135,85 @@ func elhRunner(opts RunOpts) (string, string, error) {
 		err := fmt.Errorf("invalid path: '%s'", p)
 		return "500 server err", "invalid path", err
 	}
+	var getString func(p pa) (string, []string)
+	getString = func(p pa) (string, []string) {
+		if p.pos >= len(p.in) { return p.out, p.mem2 }
+		switch p.in[p.pos] {
+		 case "(":
+			if !p.esc {
+				p.out = p.mem
+				p.mem = ""
+				p.memInt = 0
+			}
+		 case ",":
+			if !p.esc { p.memInt++ }
+		 case " ":
+			if !p.esc {
+				p.pos++ ; return getString(p)
+			} else { p.mem += p.in[p.pos] }
+		 case ")":
+			if !p.esc {
+				p.mem2 = append(p.mem2, p.mem)
+			}
+		 case "'": p.esc = !p.esc
+		 default:
+			p.mem += p.in[p.pos]
+		}
+		p.pos++
+		return getString(p)
+	}
 	var getIndex func(p pa) (string, int)
 	getIndex = func(p pa) (string, int) {
-		if p.pos >= len(p.in) { return p.out, p.mem2 }
+		if p.pos >= len(p.in) { return p.out, p.memInt }
 		switch p.in[p.pos] {
 		 case "[": p.out += p.mem;p.mem = ""
 		 case "]":
 			var err error
-			p.mem2, err = strconv.Atoi(p.mem)
+			p.memInt, err = strconv.Atoi(p.mem)
 			if err != nil { return "", 0 }
 			p.pos++
 		 default: p.mem += p.in[p.pos]
 		};p.pos++
 		return getIndex(p)
 	}
+	if strings.Contains(args[0], "(") {
+		cmd, fi := getString(pa{ in: strings.Split(args[0], "") })
+		args = append(append([]string{cmd}, fi...), args[1:]...)
+	}
 	switch args[0] {
 	 case "req":
+		if len(args) < 2 { return invArg(args[0], "path ended too soon") }
 		switch args[1] {
 		 case "header":
 			if len(args) < 3 { return invPath(strings.Join(args, ".")) }
-			p := pa{ in: strings.Split(args[2], "") }
-			header, i := getIndex(p)
+			header, i := getIndex(pa{ in: strings.Split(args[2], "") })
 			if header == "" { return invPath(args[2]) }
 			res = opts.Req.Header[header][i]
 		}
 	 case "dump_file":
 		if len(args) < 2 { return invArg(args[0], "file not provided") }
+		resT, err := os.ReadFile(args[1])
+		res = string(resT)
+		if err != nil { return "500", "failed to read file", err }
+	 case "render_file":
+		var useReg bool
+		var file string
+		if len(args) < 2 { return invArg(args[0], "file not provided") }
+		file = args[1]
+		fiB, err := os.ReadFile(args[1])
+		fi := string(fiB)
+		if err != nil { return "500", "failed to read file", err }
+		if len(args) >= 3 { useReg = strings.ToLower(args[1]) == "true" }
+		var resT string 
+		if useReg {
+			resT, err = RenderWithRegistry(fi, opts.Registry, opts.Req, opts.Wr)
+		} else {
+			var resB []byte
+			resB, err = RenderFile(file, opts.Req, opts.Wr)
+			resT = string(resB)
+		}
+		res = string(resT)
+		if err != nil { return "500", "failed to read file", err }
 	}
 	if res == nil { return invPath(strings.Join(args, ".")) }
 	resF := fmt.Sprintf("%v", res)
