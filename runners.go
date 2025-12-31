@@ -5,6 +5,8 @@ import (
 	"os"
 	"fmt"
 	"slices"
+	"strconv"
+	"strings"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
 	"github.com/Supraboy981322/gomn"
@@ -110,9 +112,45 @@ func gomnParser(opts RunOpts) (string, string, error) {
 }
 
 func elhRunner(opts RunOpts) (string, string, error) {
-	var res string
-	argv := ToArgs(opts.Code, ".")
-	argn := len(argv)
-	_ = argn
-	return res, "", nil
+	type pa struct{
+		pos int
+		mem2 int
+		mem string
+		in []string
+		out string
+	}
+	invPath := func(p string) (string, string, error){
+		err := fmt.Errorf("invalid path: '%s'", p)
+		return "500 server err", "invalid path", err
+	}
+	var getIndex func(p pa) (string, int)
+	getIndex = func(p pa) (string, int) {
+		if p.pos >= len(p.in) { return p.out, p.mem2 }
+		switch p.in[p.pos] {
+		 case "[": p.out += p.mem;p.mem = ""
+		 case "]":
+			var err error
+			p.mem2, err = strconv.Atoi(p.mem)
+			if err != nil { return "", 0 }
+			p.pos++
+		 default: p.mem += p.in[p.pos]
+		};p.pos++
+		return getIndex(p)
+	}
+	var res any
+	args := ToArgs(opts.Code, ".")
+	switch args[0] {
+	 case "req":
+		switch args[1] {
+		 case "header":
+			if len(args) < 3 { return invPath(strings.Join(args, ".")) }
+			p := pa{ in: strings.Split(args[2], "") }
+			header, i := getIndex(p)
+			if header == "" { return invPath(args[2]) }
+			res = opts.Req.Header[header][i]
+		}
+	}
+	if res == nil { return invPath(strings.Join(args, ".")) }
+	resF := fmt.Sprintf("%v", res)
+	return resF, "", nil
 }
