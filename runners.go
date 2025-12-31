@@ -112,12 +112,22 @@ func gomnParser(opts RunOpts) (string, string, error) {
 }
 
 func elhRunner(opts RunOpts) (string, string, error) {
+	var res any
+	args := ToArgs(opts.Code, ".")
+	if len(args) < 1 {
+		err := fmt.Errorf("no args provided")
+		return "", "no arg", err
+	}
 	type pa struct{
 		pos int
 		mem2 int
 		mem string
 		in []string
 		out string
+	}
+	invArg := func(a string, r string) (string, string, error) {
+		err := fmt.Errorf("called '%s', but %s", a, r)
+		return "", r, err
 	}
 	invPath := func(p string) (string, string, error){
 		err := fmt.Errorf("invalid path: '%s'", p)
@@ -137,8 +147,6 @@ func elhRunner(opts RunOpts) (string, string, error) {
 		};p.pos++
 		return getIndex(p)
 	}
-	var res any
-	args := ToArgs(opts.Code, ".")
 	switch args[0] {
 	 case "req":
 		switch args[1] {
@@ -149,6 +157,8 @@ func elhRunner(opts RunOpts) (string, string, error) {
 			if header == "" { return invPath(args[2]) }
 			res = opts.Req.Header[header][i]
 		}
+	 case "dump_file":
+		if len(args) < 2 { return invArg(args[0], "file not provided") }
 	}
 	if res == nil { return invPath(strings.Join(args, ".")) }
 	resF := fmt.Sprintf("%v", res)

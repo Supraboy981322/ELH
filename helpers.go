@@ -306,7 +306,9 @@ func UseDefault(name string) *ExternalRunner {
 }
 
 func ToArgs(src string, by string) []string {
+	if len(src) <= 1 { return []string{} }
 	if src[len(src)-1] == ' ' { src = src[:len(src)-1] }
+	if len(src) <= 1 { return []string{} }
 	type argParser struct{
 		quot bool
 		esc bool
