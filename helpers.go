@@ -298,6 +298,7 @@ func UseDefault(name string) *ExternalRunner {
 }
 
 func ToArgs(src string, by string) []string {
+	if src[len(src)-1] == ' ' { src = src[:len(src)-1] }
 	type argParser struct{
 		quot bool
 		esc bool
@@ -320,7 +321,6 @@ func ToArgs(src string, by string) []string {
 			p.out = append(p.out, p.mem)
 			return p.out
 		}
-		fmt.Println(p.in[p.pos])
 		cur := p.in[p.pos]
 		if p.esc || p.quot {
 			if p.quot && (cur == `"` || cur == `'`) {
