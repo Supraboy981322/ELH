@@ -22,6 +22,10 @@ type ExternalRunner struct {
 	Func func(runOpts RunOpts) (stdout, stderr string, err error)
 }
 
+func (r *ExternalRunner) GetRunner() *ExternalRunner {
+	return r
+}
+
 func (r *ExternalRunner) Run(runOpts RunOpts) (string, string, error) {
 	code := runOpts.Code
 	tmp := runOpts.TmpFile

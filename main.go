@@ -31,6 +31,7 @@ type (
 	}
 	Runner interface {
 		Run(runOpts RunOpts) (stdout string, stderr string, err error)
+		GetRunner() (*ExternalRunner)
 	}
 	Logger struct {
 		Func func(string)

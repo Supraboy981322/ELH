@@ -248,3 +248,7 @@ func HttpServer(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func UseDefault(name string) *ExternalRunner {
+	reg := DefaultRegistry()[name].GetRunner()
+	return reg
+}
