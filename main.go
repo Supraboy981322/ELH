@@ -26,6 +26,8 @@ type (
 		TmpFile *os.File
 		Req *http.Request
 		Wr http.ResponseWriter
+		Lang string
+		Registry map[string]Runner
 	}
 	Runner interface {
 		Run(runOpts RunOpts) (stdout string, stderr string, err error)
