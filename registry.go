@@ -78,10 +78,8 @@ func DefaultRegistry() map[string]Runner {
 			Env:     os.Environ(),
 		},
 		"vim": &ExternalRunner{
-			CmdName: "vimc",
-			Args:    []string{},
 			Timeout: 5 * time.Second,
-			Env:     os.Environ(),
+			Func: vimRunner,
 		},
 		"md": &ExternalRunner{
 			Timeout: 5 * time.Second,

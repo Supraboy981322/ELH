@@ -4,7 +4,9 @@ import (
 	"io"
 	"os"
 	"fmt"
+	"bytes"
 	"slices"
+	"os/exec"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
 	"github.com/Supraboy981322/gomn"
@@ -109,3 +111,21 @@ func gomnParser(opts RunOpts) (string, string, error) {
 	return res, "", nil
 }
 
+func vimRunner(opts RunOpts) (string, string, error) {
+	args := []string{
+			"vim", "--clean", "-n", "--not-a-term",
+			"--cmd", opts.Code, "--cmd", "qall!"}
+	cmd := exec.Command("vim", args...)
+
+	var stdout_buf, stderr_buf bytes.Buffer
+	cmd.Stdout = &stderr_buf
+	cmd.Stderr = &stdout_buf
+
+	err := cmd.Run()
+	stdout, stderr := stdout_buf.String(), stderr_buf.String()
+	if err != nil {
+		return stdout, stderr, err
+	}
+
+	return stdout, stderr, nil
+}

@@ -68,7 +68,7 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - Basic
   - bwbasic
 - VimScript
-  - [VIMc](https://github.com/Supraboy981322/vimc/)
+  - [Vim](https://github.com/vim/vim/)
 - gomn (parser)
   - built-in ([thanks to the gomn package](https://github.com/Supraboy981322/gomn))
 

@@ -82,6 +82,9 @@ func formatSTD(lang string, stdout string) string {
 	case "vim":
 	default:
 	}
+	if len(res) > 1 { 
+		if res[len(res)-1] == '\n' { res = res[:len(res)-2] }
+	}
 	return res
 }
 

@@ -210,6 +210,7 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr h
 
 		code = formatCode(code, lang, tmp.Name(), tmpDir)
 
+		api := BldApiStruct(req, wr)
 		runOpts := RunOpts{
 			Code: code,
 			TmpDir: tmpDir,
@@ -218,6 +219,7 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr h
 			Wr: wr,
 			Lang: lang,
 			Registry: registry,
+			Api: api,
 		}
 		stdout, stderr, err := r.Run(runOpts)
 		if err != nil {

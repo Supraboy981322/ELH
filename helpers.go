@@ -6,7 +6,9 @@ import (
 	"time"
 	"bytes"
 	"errors"
+	"strconv"
 	"strings"
+	"reflect"
 	"net/http"
 	"path/filepath"
 )
@@ -19,6 +21,82 @@ func RenderWithRegistry(src string, registry map[string]Runner, r *http.Request,
 // wrapper that uses the DefaultRegistry.
 func Render(src string, r *http.Request, wr http.ResponseWriter) (string, error) {
 	return RenderWithRegistry(src, DefaultRegistry(), r, wr)
+}
+
+func BldApiStruct(req *http.Request, wr http.ResponseWriter) API {
+	params := map[string]string{}
+	for k, _ := range req.URL.Query() {
+		params[k] = req.URL.Query().Get(k)
+	}
+	api := API{
+		Req: reqApi{
+			Method: req.Method,
+			IsTLS: false,
+			URL: urlApi{
+				Host: req.Host,
+				URI: req.RequestURI,
+				Path: req.URL.Path,
+				Params: params,
+			},
+		},
+	}
+	
+	if req.TLS != nil { api.Req.IsTLS = true }
+
+	return api
+}
+
+func readStruct(v interface{}, path string) (reflect.Value, error) {
+	if path == "" {
+		return reflect.Value{}, fmt.Errorf("%w: empty path", ErrInvalidPath)
+	}
+	rv := reflect.ValueOf(v)
+	if !rv.IsValid() || rv.Kind() == reflect.Ptr && rv.IsNil() {
+		return reflect.Value{}, fmt.Errorf("%w: nil or invalid input", ErrInvalidPath)
+	}
+
+	for rv.Kind() == reflect.Ptr {
+		rv = rv.Elem()
+	}
+
+	parts := strings.Split(path, ".")
+	for _, p := range parts {
+		if p == "" {
+			return reflect.Value{}, fmt.Errorf("%w: empty path segment", ErrInvalidPath)
+		}
+		
+		switch rv.Kind() {
+		 case reflect.Struct:
+			rv = rv.FieldByName(p)
+			if !rv.IsValid() {
+				err := fmt.Errorf("%w: field %q not found", ErrInvalidPath, p)
+				return reflect.Value{}, err
+			}
+		 case reflect.Map:
+			k := reflect.ValueOf(p)
+			rv = rv.MapIndex(k)
+			if !rv.IsValid() {
+				err := fmt.Errorf("%w: key %q isn't in map", ErrInvalidPath, p)
+				return reflect.Value{}, err
+			}
+		 case reflect.Slice, reflect.Array:
+			i, err := strconv.Atoi(p)
+			if err != nil {
+				err = fmt.Errorf("%w: %q is NaN", ErrInvalidPath, p)
+				return reflect.Value{}, err
+			}
+			if i < 0 || i >= rv.Len() {
+				err = fmt.Errorf("%w: index %q out of range", ErrInvalidPath, i)
+				return reflect.Value{}, err
+			}
+			rv = rv.Index(i)
+		 default:
+			err := fmt.Errorf("%w: can't traverse into %s"+
+						"(not yet implemented)", ErrInvalidPath, rv.Kind())
+			return reflect.Value{}, err
+		}
+	}
+	return rv, nil
 }
 
 func MkReg(caller string, cmd string, args []string, timeout int, env []string) map[string]Runner {

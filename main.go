@@ -20,6 +20,20 @@ var (
 )
 
 type (
+	urlApi struct{
+		Host string
+		Path string
+		Params map[string]string
+		URI string
+	}
+	reqApi struct{
+		Method string
+		IsTLS bool
+		URL urlApi
+	}
+	API struct {
+		Req reqApi
+	}
 	RunOpts struct {
 		Code string
 		TmpDir string
@@ -28,6 +42,7 @@ type (
 		Wr http.ResponseWriter
 		Lang string
 		Registry map[string]Runner
+		Api API
 	}
 	Runner interface {
 		Run(runOpts RunOpts) (stdout string, stderr string, err error)
