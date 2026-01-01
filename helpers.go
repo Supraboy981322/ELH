@@ -66,6 +66,8 @@ func readStruct(v interface{}, path string) (reflect.Value, error) {
 		}
 		
 		switch rv.Kind() {
+		 case reflect.String:
+			rv = reflect.Value(rv).Elem().FieldByName(p)
 		 case reflect.Struct:
 			rv = rv.FieldByName(p)
 			if !rv.IsValid() {
@@ -90,6 +92,11 @@ func readStruct(v interface{}, path string) (reflect.Value, error) {
 				return reflect.Value{}, err
 			}
 			rv = rv.Index(i)
+		 case reflect.Ptr:
+			for rv.Kind() == reflect.Ptr || rv.Kind() == reflect.Interface {
+				if rv.IsNil() { break }
+				rv = rv.Elem()
+			}
 		 default:
 			err := fmt.Errorf("%w: can't traverse into %s"+
 						"(not yet implemented)", ErrInvalidPath, rv.Kind())

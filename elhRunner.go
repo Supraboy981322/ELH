@@ -97,8 +97,8 @@ func elhRunner(opts RunOpts) (string, string, error) {
 	}
 	if unicode.IsUpper(rune(args[0][0])) {
 		sT, err := readStruct(opts, strings.Join(args, "."))
-		if err != nil { return "", err.Error(), err }
-		res = sT.String()
+		if err != nil { return "", err.Error(), err } 
+		res = fmt.Sprintf("%v", sT.String())
 	} else {
 		switch args[0] {
 		 case "req":
