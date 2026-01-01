@@ -94,7 +94,7 @@ func elhRunner(opts RunOpts) (string, string, error) {
 	if strings.Contains(args[0], "(") {
 		cmd, fi := getString(pa{ in: strings.Split(args[0], "") })
 		args = append(append([]string{cmd}, fi...), args[1:]...)
-	};fmt.Println(opts.Api.Req.URL.URI)
+	}
 	if unicode.IsUpper(rune(args[0][0])) {
 		sT, err := readStruct(opts, strings.Join(args, "."))
 		if err != nil { return "", err.Error(), err }
