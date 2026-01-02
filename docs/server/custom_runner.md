@@ -31,7 +31,7 @@ Below is a basic registry that uses the default lua runner, and an os command fo
 
 ELH exposes structs which're passed to runner functions.
 
-The a struct of type `RunOpts` is directly passed to a runner when it's called by ELH, `RunOpts`.
+A struct of type `RunOpts` is directly passed to a runner when it's called by ELH, `RunOpts`.
   ```go
   type RunOpts struct {
     Code string       //the extracted code from the requested ELH file
