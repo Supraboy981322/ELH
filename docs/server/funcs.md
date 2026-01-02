@@ -72,20 +72,3 @@
   ```go
   (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request)
   ```
-
----
-
->[!WARNING]
->The following functions need to be updated, functionality not guaranteed to be 100% up-to-date with other functions
-
-- Serve a file with `"net/http"` and auto detect ELH files
-  (Returns the relative filepath, for logging, and an error)
-  ```go
-  Serve(w http.ResponseWriter, r *http.Request) (string, error)
-  ```
-
-- Serve elh file with a custom registry
-  (returns the relative filepath, for logging, and an error)
-  ```go
-  ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[string]Runner) (string, error)
- ```
