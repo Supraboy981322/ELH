@@ -13,9 +13,9 @@
   )
 
   func main() {
+    //optional: configure the server 
     server := elh.ServerOpts{
       Registry: elh.DefaultRegistry(),
-      //optional: set a logger for incoming requests
       Log: elh.Logger{
         Func: func(str string) { log.Print(str) },
       },
