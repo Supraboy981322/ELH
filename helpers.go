@@ -294,8 +294,8 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 func HttpServer(w http.ResponseWriter, r *http.Request) {
 	var resp string
 	//get the requested file
-	file := r.URL.Path
-	if file == "/" {
+	file := filepath.Join(Server.WebDir, r.URL.Path)
+	if file == Server.WebDir {
 		file = "index"
 	} else if file[len(file)-1:] ==  "/" {
 		file = fmt.Sprintf("%sindex", string(file[1:]))
