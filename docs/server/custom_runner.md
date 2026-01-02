@@ -41,7 +41,7 @@ The a struct of type `RunOpts` is directly passed to a runner when it's called b
     Wr http.ResponseWriter //to respond to the client before the function returns
     Lang string       //the language tag used in the elh openning element ('<$')
     Registry map[string]Runner //the registry the function was called from
-    Api API    //for default ELH runner ('<$elh') scripting, exposed incase needed
+    Api API    //used in the default ELH runner ('<$elh'), exposed incase needed
     Log Logger //to log messages before the runner returns
   }
   ```
