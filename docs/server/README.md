@@ -17,7 +17,7 @@
     elh.Logger = func(str string) { log.Print(str) }
 
     //create the http handler
-    http.HandleFunc("/", elh.HttpServer)
+    http.HandleFunc("/", elh.HttpHandler)
 
     //start the server 
     err := http.ListenAndServe(":8080", nil)

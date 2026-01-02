@@ -3,13 +3,19 @@
 - Render from source
   (Returns the result, and an error)
   ```go
-  Render(src string, r *http.Request) (string, error)
+  Render(src string, r *http.Request, wr http.ResponseWriter) (string, error)
   ```
 
 - Render with a custom registry
   (Returns the result, and an error)
   ```go
-  RenderWithRegistry(src string, registry map[string]Runner, r *http.Request) (string, error)
+  RenderWithRegistry(src string, registry map[string]Runner, r *http.Request, wr *http.ResponseWriter) (string, error)
+  ```
+
+- Construct the ELH data API struct for a custom runner
+  (returns type `elh.API`)
+  ```go
+  BldApiStruct(req *http.Request, wr http.ResponseWriter) API
   ```
 
 - Make registry
@@ -23,11 +29,14 @@
   ```go
   MkRegDefaults(cmd string, args []string) map[string]Runner
   ```
-
-- Serve a file with `"net/http"` and auto detect ELH files
-  (Returns the relative filepath, for logging, and an error)
+  The resulting runner looks something like this:
   ```go
-  Serve(w http.ResponseWriter, r *http.Request) (string, error)
+  cmd: &elh.ExternalRunner{
+    Cmdname: cmd,
+    Args: args,
+    Timeout: 5 * time.Second,
+    Env: os.Environ()
+  }
   ```
 
 - Read and render a file from the path/name
@@ -39,7 +48,13 @@
 - Get the default registry
   (returns a registry, which is of type `map[string]elh.Runner`)
   ```go
-  DefaultRegistry()
+  DefaultRegistry() map[string]Runner
+  ```
+
+- Use the default registry entry for a runner
+  (returns type `*elh.ExternalRunner`)
+  ```go
+  UseDefault(name string) *ExternalRunner
   ```
 
 - Run code (expects HTML to be pre-stripped) 
@@ -48,7 +63,31 @@
   (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error)
   ```
 
+- Convert "code" to slice of args (`[]string`) for parsing in a custom runner (takes src of type string and a string to split by
+  ```go
+  ToArgs(src string, by string) []string
+  ```
+
+
+
 - http handler helper
   ```go
-  HttpServer(w http.ResponseWriter, r *http.Request)
+  HttpHandler(w http.ResponseWriter, r *http.Request)
   ```
+
+---
+
+>[!WARNING]
+>The following functions need to be updated, functionality not guaranteed to be 100% up-to-date with other functions
+
+- Serve a file with `"net/http"` and auto detect ELH files
+  (Returns the relative filepath, for logging, and an error)
+  ```go
+  Serve(w http.ResponseWriter, r *http.Request) (string, error)
+  ```
+
+- Serve elh file with a custom registry
+  (returns the relative filepath, for logging, and an error)
+  ```go
+  ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[string]Runner) (string, error)
+ ```
