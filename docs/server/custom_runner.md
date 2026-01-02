@@ -82,7 +82,7 @@ Below is an example of a runner that simply logs the "code" (input) and returns 
 
 ### `ToArgs(src string, by string)`
 
-A single-purpose string parser that converts "code" to slice of strings (`[]string`) for parsing as arguments
+A single-purpose string parser that converts "code" to slice of strings (`[]string`) for parsing as arguments. It returns a slice of properly split strings, leaving anything in single or double quotes untouched (nested quotations are escaped with `\`, as usual)
   
   (takes src (the "code") and a string to split by)
   ```go
