@@ -293,15 +293,13 @@ func ServeWithRegistry(w http.ResponseWriter, r *http.Request, registry map[stri
 
 func HttpServer(w http.ResponseWriter, r *http.Request) {
 	var resp string
+//	if Server.WebDir == "" { Server.WebDir, _ = os.Getwd() }
+	if Server.WebDir == "" { Server.WebDir = "." }
 	//get the requested file
 	file := filepath.Join(Server.WebDir, r.URL.Path)
 	if file == Server.WebDir {
-		file = "index"
-	} else if file[len(file)-1:] ==  "/" {
-		file = fmt.Sprintf("%sindex", string(file[1:]))
-		file, _ = checkIsDir(file)
+		file = filepath.Join(Server.WebDir, "index")
 	} else {
-		file = file[1:]
 		file, _ = checkIsDir(file)
 	}
 
