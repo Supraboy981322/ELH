@@ -91,7 +91,7 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - [ ] imports
 - [ ] Fix whitespace bugs
     - [ ] indentation requirements
-    - [ ] last char of output being cut-off
+    - [x] last char of output being cut-off
 - [x] user-defined languages (?)
 - [x] module (?)
 - [x] elh api runner bones
