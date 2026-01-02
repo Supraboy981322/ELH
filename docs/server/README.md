@@ -13,11 +13,16 @@
   )
 
   func main() {
-    //optional: set a logger for incoming requests
-    elh.Logger = func(str string) { log.Print(str) }
+    server := elh.ServerOpts{
+      Registry: elh.DefaultRegistry(),
+      //optional: set a logger for incoming requests
+      Log: elh.Logger{
+        Func: func(str string) { log.Print(str) },
+      },
+    }
 
     //create the http handler
-    http.HandleFunc("/", elh.HttpHandler)
+    http.HandleFunc("/", server.HttpHandler)
 
     //start the server 
     err := http.ListenAndServe(":8080", nil)

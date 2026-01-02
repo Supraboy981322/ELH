@@ -68,11 +68,9 @@
   ToArgs(src string, by string) []string
   ```
 
-
-
 - http handler helper
   ```go
-  HttpHandler(w http.ResponseWriter, r *http.Request)
+  (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request)
   ```
 
 ---
