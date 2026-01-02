@@ -29,6 +29,7 @@ func BldApiStruct(req *http.Request, wr http.ResponseWriter) API {
 	return api
 }
 
+
 func ToArgs(src string, by string) []string {
 	if len(src) <= 1 { return []string{} }
 	if src[len(src)-1] == ' ' { src = src[:len(src)] }
@@ -56,12 +57,14 @@ func ToArgs(src string, by string) []string {
 			return p.out
 		}
 		cur := p.in[p.pos]
+		if cur == `\` {
+			p.esc = true ; p.pos++ ; return foo(p)
+		}
 		if p.esc || p.quot {
-			if p.quot && (cur == `"` || cur == `'`) {
+			if p.quot && !p.esc && (cur == `"` || cur == `'`) {
 				p.pos++ ; p.quot = false ; return foo(p)
 			}
-			p.mem += cur
-			p.pos++
+			p.mem += cur ; p.pos++
 			if p.esc { p.esc = false }
 			return foo(p)
 		}
