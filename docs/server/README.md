@@ -18,7 +18,7 @@ ELH aims to make setting-up and configuring a server somewhat easy.
 
   func main() {
     //configure the server 
-    elh.Server := elh.ServerOpts{
+    elh.Server = elh.ServerOpts{
       Registry: elh.DefaultRegistry(),
       Log: elh.Logger{
         Func: func(str string) { log.Print(str) },
