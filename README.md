@@ -89,9 +89,13 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 - [x] Mime types for files other-than `.elh`
 - [ ] Passing headers and params
 - [ ] imports
-- [ ] Fix indentation bug
-- [ ] user-defined languages (?)
+- [ ] Fix whitespace bugs
+    - [ ] indentation requirements
+    - [ ] last char of output being cut-off
+- [x] user-defined languages (?)
 - [x] module (?)
+- [x] elh api runner bones
+- [ ] more complete elh api runner
 
 ~~-------------~~  ***`languages`***  ~~-------------~~
 - [x] Go
