@@ -1,7 +1,7 @@
 <h1 align="center">ELH (Embed Languages in HTML)</h1>
 
 >[!WARNING]
->HIGHLY EXPERIMENTAL AND EARLY DEVELOPMENT!
+>This project is highly experimental and mostly a toy project. However, I do plan to maintain this project, as I have multiple (and likely will create more) projects which use it)
 
 Freely embed various programming languages into HTML; like PHP, but without being bound to one language.
 
