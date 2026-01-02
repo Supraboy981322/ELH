@@ -39,10 +39,6 @@ func MkRegDefaults(cmd string, args []string) map[string]Runner {
 func UseDefault(name string) *ExternalRunner {
 	reg := DefaultRegistry()[name]
 	if reg == nil {
-		if Server.Log.Func != nil {
-			Server.Log.Func("runner not in registry:  \n"+name)
-			os.Exit(1)
-		}
 		fmt.Fprintf(syserr, "runner not in registry:  %s\n", name)
 		os.Exit(1)
 	}

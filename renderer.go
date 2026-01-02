@@ -241,12 +241,18 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		modCont := []byte("module elh\n\ngo 1.20\n")
 		err := os.WriteFile(filepath.Join(tmpDir, "go.mod"), modCont, 0644)
 		if err != nil {
-			fmt.Errorf("err prepping for Go:  %v\n", err)
+			if opts.Log.Func != nil {
+				errStr := fmt.Sprintf("err prepping for go: %v", err)
+				opts.Log.Func(errStr)
+			} else { fmt.Fprintf(syserr, "err prepping for go:  %v\n", err) }
 			return nil
 		}
 		file, err := os.Create(filepath.Join(tmpDir, "main.go"))
 		if err != nil {
-			fmt.Errorf("%v", err)
+			if opts.Log.Func != nil {
+				errStr := fmt.Sprintf("%v", err)
+				opts.Log.Func(errStr)
+			} else { fmt.Fprintf(syserr, "%v\n", err) }
 			return nil
 		}
 		return file
@@ -254,7 +260,10 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		fileName := fmt.Sprintf(filepath.Base(tmpDir))
 		file, err := os.Create(filepath.Join(tmpDir, fileName))
 		if err != nil {
-			fmt.Errorf("%v", err)
+			if opts.Log.Func != nil {
+				errStr := fmt.Sprintf("%v", err)
+				opts.Log.Func(errStr)
+			} else { fmt.Fprintf(syserr, "%v\n", err) }
 			return nil
 		}
 		return file
