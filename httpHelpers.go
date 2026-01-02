@@ -10,14 +10,14 @@ import (
 	"path/filepath"
 )
 
-func HttpHandler(w http.ResponseWriter, r *http.Request) {
+func (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request) {
 	var resp string
-//	if Server.WebDir == "" { Server.WebDir, _ = os.Getwd() }
-	if Server.WebDir == "" { Server.WebDir = "." }
+//	if server.WebDir == "" { server.WebDir, _ = os.Getwd() }
+	if server.WebDir == "" { server.WebDir = "." }
 	//get the requested file
-	file := filepath.Join(Server.WebDir, r.URL.Path)
-	if file == Server.WebDir {
-		file = filepath.Join(Server.WebDir, "index")
+	file := filepath.Join(server.WebDir, r.URL.Path)
+	if file == server.WebDir {
+		file = filepath.Join(server.WebDir, "index")
 	} else {
 		file, _ = checkIsDir(file)
 	}
@@ -50,7 +50,7 @@ func HttpHandler(w http.ResponseWriter, r *http.Request) {
 		var result string
 		//if the file is elh, parse it
 		if ext == ".elh" {
-			result, err = Render(fileStr, r, w)
+			result, err = RenderWithRegistry(fileStr, server.Registry, r, w)
 			if err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
@@ -65,8 +65,8 @@ func HttpHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		var err error
 		var fileStr string
-		if Server.ErrPage != nil {
-			fileStr, err = Render(string(Server.ErrPage), r, w)
+		if server.ErrPage != nil {
+			fileStr, err = Render(string(server.ErrPage), r, w)
 			if err != nil {
 				http.Error(w, "500 server err", 500)
 				return
@@ -84,12 +84,12 @@ func HttpHandler(w http.ResponseWriter, r *http.Request) {
 	file = "\033[35m"+file+"\033[0m"
 
 	//check if logger is set
-	if Server.Log.Func != nil {
+	if server.Log.Func != nil {
 		//build string
 		logStr := "\033[1m[req]:\033[0m "
 		logStr += file+" | "
 		logStr += "\033[1m[resp]:\033[0m "+resp
 		//log it
-		Server.Log.Func(logStr)
+		server.Log.Func(logStr)
 	}
 }

@@ -59,5 +59,6 @@ type (
 		Log Logger
 		ErrPage []byte
 		RenderStderr bool
+		Registry map[string]Runner
 	}
 )
