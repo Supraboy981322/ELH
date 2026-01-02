@@ -18,7 +18,7 @@ ELH aims to make setting-up and configuring a server somewhat easy.
 
   func main() {
     //configure the server 
-    server := elh.ServerOpts{
+    elh.Server := elh.ServerOpts{
       Registry: elh.DefaultRegistry(),
       Log: elh.Logger{
         Func: func(str string) { log.Print(str) },
@@ -26,7 +26,7 @@ ELH aims to make setting-up and configuring a server somewhat easy.
     }
 
     //create the http handler
-    http.HandleFunc("/", server.HttpHandler)
+    http.HandleFunc("/", elh.Server.HttpHandler)
 
     //start the server 
     err := http.ListenAndServe(":8080", nil)
