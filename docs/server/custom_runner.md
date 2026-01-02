@@ -82,14 +82,18 @@ Below is an example of a runner that simply logs the "code" (input) and returns 
 
 ### `ToArgs(src string, by string)`
 
-A single-purpose string parser that converts "code" to slice of strings (`[]string`) for parsing as arguments (takes src (the "code") and a string to split by)
+A single-purpose string parser that converts "code" to slice of strings (`[]string`) for parsing as arguments
+  
+  (takes src (the "code") and a string to split by)
   ```go
   ToArgs(src string, by string) []string
   ```
 
 ### `(opts *RunOpts) Unwrap()`
 
-Returns the basic `RunOpts` as individual values. (returns `string`, `string`, `*os.File`, `*http.Request`, and `http.ResponseWriter`)
+Returns the basic `RunOpts` as individual values.
+
+(returns `string`, `string`, `*os.File`, `*http.Request`, and `http.ResponseWriter`)
 
 Below is an example
   ```go
