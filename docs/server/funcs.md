@@ -63,11 +63,6 @@
   (r *ExternalRunner) Run(code string, tmp *os.File) (string, string, error)
   ```
 
-- Convert "code" to slice of args (`[]string`) for parsing in a custom runner (takes src of type string and a string to split by
-  ```go
-  ToArgs(src string, by string) []string
-  ```
-
 - http handler helper
   ```go
   (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request)

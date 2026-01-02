@@ -1,6 +1,6 @@
 # ELH: Server Doc
 
-## Helper function usage examples
+## Http handler helper function
 
 - HTTP server handler
   ```go
@@ -31,7 +31,27 @@
     }
   }
   ```
-  This function automatically handles http GET requests to the server, so your project can just serve files (including rendering `.elh` files) without having to write the singular function to do it yourself.
+  This function handles http GET requests to the server, so your project can just serve files (including rendering `.elh` files) without having to write the singular function to do it yourself.
+
+---
+
+## Custom registry and/or runner
+
+- To create a custom runner (eg: a script/system command or a function), you have to create a registry with a custom runner.
+
+You can define a registry like so:
+  ```go
+  registry := map[string]elh.Runner {
+    "notify_access": &elh.ExternalRunner {
+      CmdName: "curl",
+      Args: []string{"example.com", "-d", "someone accessed the dashboard"},
+      Timeout: 5 * time.Second,
+      Env: os.Environ(),
+    },
+  }
+  ```
+
+See the [custom runners doc](custom_runner.md) for more information about custom runners and registries.
 
 ---
 
