@@ -11,7 +11,7 @@ var (
 		".elh",
 		".html",
 	}
-	srvr ServerOpts
+	Server ServerOpts
 	sysout = os.Stdout
 	syserr = os.Stderr
 )
@@ -41,6 +41,7 @@ type (
 		Registry map[string]Runner
 		Api API
 		Log Logger
+		Server ServerOpts
 	}
 	Runner interface {
 		Run(runOpts RunOpts) (stdout string, stderr string, err error)

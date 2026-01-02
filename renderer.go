@@ -91,8 +91,8 @@ func (r *ExternalRunner) Run(runOpts RunOpts) (string, string, error) {
 	stderrWr = &stderr_buf
 	if Server.RenderStderr {
 		stdoutWr = io.MultiWriter(stderrWr, stdoutWr)
-		if Server.Log.Runner.LogStderr {
-			if Server.Log.Runner.LogStderrToStdout {
+		if runOpts.Log.Runner.LogStderr {
+			if runOpts.Log.Runner.LogStderrToStdout {
 				cmd.Stderr = io.MultiWriter(sysout, stdoutWr)
 			} else {
 				cmd.Stderr = io.MultiWriter(syserr, stdoutWr)
@@ -103,7 +103,7 @@ func (r *ExternalRunner) Run(runOpts RunOpts) (string, string, error) {
 	} else {
 		if Server.Log.Runner.LogStderr {
 			stderrOutput := syserr
-			if Server.Log.Runner.LogStderrToStdout {
+			if runOpts.Log.Runner.LogStderrToStdout {
 				stderrOutput = sysout
 			}
 			stderrWr = io.MultiWriter(stderrOutput, &stderr_buf)
@@ -241,17 +241,17 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		modCont := []byte("module elh\n\ngo 1.20\n")
 		err := os.WriteFile(filepath.Join(tmpDir, "go.mod"), modCont, 0644)
 		if err != nil {
-			if opts.Log.Func != nil {
+			if Server.Log.Func != nil {
 				errStr := fmt.Sprintf("err prepping for go: %v", err)
-				opts.Log.Func(errStr)
+				Server.Log.Func(errStr)
 			} else { fmt.Fprintf(syserr, "err prepping for go:  %v\n", err) }
 			return nil
 		}
 		file, err := os.Create(filepath.Join(tmpDir, "main.go"))
 		if err != nil {
-			if opts.Log.Func != nil {
+			if Server.Log.Func != nil {
 				errStr := fmt.Sprintf("%v", err)
-				opts.Log.Func(errStr)
+				Server.Log.Func(errStr)
 			} else { fmt.Fprintf(syserr, "%v\n", err) }
 			return nil
 		}
@@ -260,9 +260,9 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 		fileName := fmt.Sprintf(filepath.Base(tmpDir))
 		file, err := os.Create(filepath.Join(tmpDir, fileName))
 		if err != nil {
-			if opts.Log.Func != nil {
+			if Server.Log.Func != nil {
 				errStr := fmt.Sprintf("%v", err)
-				opts.Log.Func(errStr)
+				Server.Log.Func(errStr)
 			} else { fmt.Fprintf(syserr, "%v\n", err) }
 			return nil
 		}
