@@ -11,6 +11,9 @@ import (
 )
 
 func (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request) {
+	if server.Registry == nil {
+		server.Registry = DefaultRegistry()
+	}
 	var resp string
 //	if server.WebDir == "" { server.WebDir, _ = os.Getwd() }
 	if server.WebDir == "" { server.WebDir = "." }
@@ -54,6 +57,10 @@ func (server *ServerOpts) HttpHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				fmt.Fprintf(w, "There appears to be an error in the `.elh` file %s", file)
+				if server.Log.Func != nil {
+					str := fmt.Sprintf("[err]: RenderWithRegistry() %v", err)
+					server.Log.Func(str)
+				}
 				resp = "500; problem with elh file"
 			}
 			w.Header().Set("Content-Type", "text/html")

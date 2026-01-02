@@ -63,8 +63,7 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 		code = code + "\nqall!"
 	case "bash":
 		head := `
-source `+
-		filepath.Join(tmpDir, "elhLib.bash")
+source `+filepath.Join(tmpDir, "elhLib.bash")+"\n"
 		code = head + code
 	default:
 	}

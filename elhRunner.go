@@ -127,6 +127,7 @@ func elhRunner(opts RunOpts) (string, string, error) {
 			var resT string 
 			if useReg {
 				resT, err = RenderWithRegistry(fi, opts.Registry, opts.Req, opts.Wr)
+				if err != nil { return "500", "failed to read file", err }
 			} else {
 				var resB []byte
 				resB, err = RenderFile(file, opts.Req, opts.Wr)
