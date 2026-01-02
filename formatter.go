@@ -81,8 +81,14 @@ func formatSTD(lang string, stdout string) string {
 	case "vim":
 	default:
 	}
-	if len(res) > 1 { 
-		if res[len(res)-1] == '\n' { res = res[:len(res)-2] }
+	if len(res) > 1 {
+		resS := strings.Split(res, "\n")
+		resS[0] = strings.TrimSpace(resS[0])
+		resS[len(resS)-1] = strings.TrimSpace(resS[len(resS)-1])
+		res = strings.Join(resS, "\n")
+		if res[len(res)-1] == '\n' {
+			res = res[:len(res)-1]
+		} 
 	}
 	return res
 }
