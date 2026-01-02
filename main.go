@@ -103,8 +103,3 @@ func RenderFile(file string, r *http.Request, w http.ResponseWriter) ([]byte, er
 
 	return nil, errors.New("elh failed: uncaught err")
 }
-
-func fileExists(filePath string) bool {
-	_, err := os.Stat(filePath)
-	return !errors.Is(err, os.ErrNotExist)
-}

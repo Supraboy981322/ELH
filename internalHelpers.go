@@ -125,3 +125,8 @@ func splitLines(src string, split_on []string) ([]string) {
 	}
 	return foo(p)
 }
+
+func fileExists(filePath string) bool {
+	_, err := os.Stat(filePath)
+	return !errors.Is(err, os.ErrNotExist)
+}
