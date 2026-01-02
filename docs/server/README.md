@@ -1,8 +1,12 @@
 # ELH: Server Doc
 
-## Http handler helper function
+ELH aims to make setting-up and configuring a server somewhat easy.
 
-- HTTP server handler
+---
+
+## Creating a basic ELH server
+
+  Using the ELH http handler
   ```go
   package main
   
@@ -13,7 +17,7 @@
   )
 
   func main() {
-    //optional: configure the server 
+    //configure the server 
     server := elh.ServerOpts{
       Registry: elh.DefaultRegistry(),
       Log: elh.Logger{
@@ -55,4 +59,4 @@ See the [custom runners doc](custom_runner.md) for more information about custom
 
 ---
 
-For the function signatures see [this doc](https://github.com/Supraboy981322/ELH/tree/master/docs/server/funcs.md)
+For the function signatures see [this doc](funcs.md)

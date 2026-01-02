@@ -1,4 +1,4 @@
-# ELH docs --> server --> custom runner and regisry
+# ELH: Server - custom runners and registries
 
 ELH exposes all the helper functions used internally to write runners as part of the module
 
