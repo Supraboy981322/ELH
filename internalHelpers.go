@@ -3,6 +3,7 @@ package ELH
 import (
 	"os"
 	"fmt"
+	"errors"
 	"reflect"
 	"strings"
 	"strconv"

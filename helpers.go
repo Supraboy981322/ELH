@@ -4,7 +4,9 @@ import (
 	"os"
 	"fmt"
 	"time"
+	"errors"
 	"net/http"
+	"path/filepath"
 )
 
 // render src with specific registery
@@ -45,4 +47,43 @@ func UseDefault(name string) *ExternalRunner {
 		os.Exit(1)
 	}
 	return reg.GetRunner()
+}
+
+func RenderFile(file string, r *http.Request, w http.ResponseWriter) ([]byte, error) {
+	//get the extension of the requested file
+	ext := filepath.Ext(file)	
+	if ext == "" { //if there is no ext
+		//check against list of ext which can
+		//  have no ext in url
+		for i := 0; i < len(suppNoExt); i++ {
+			checkFile := fmt.Sprintf("%s%s", file, suppNoExt[i])
+			_, err := os.Stat(checkFile)
+			if err == nil { //if the file exists
+				file = checkFile //assume it's the correct one
+				ext = suppNoExt[i]
+				break
+			} else if !errors.Is(err, os.ErrNotExist) {
+				return nil, errors.New("cannot check if file exists! Schrodinger's file"+err.Error())
+			}
+		}
+	}
+
+	fileByte, err := os.ReadFile(file)
+	if err != nil {
+		return nil, errors.New("read file"+err.Error())
+	}
+
+	//if the file is elh, parse it
+	if ext == ".elh" {
+		fileStr := string(fileByte)
+		result, err := Render(fileStr, r, w)
+		if err != nil {
+			return nil, errors.New("elh failed:  "+err.Error())
+		}
+		return []byte(result), nil
+	} else {
+		return fileByte, nil
+	}
+
+	return nil, errors.New("elh failed: uncaught err")
 }
