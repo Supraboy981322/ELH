@@ -41,8 +41,8 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 >[!NOTE]
 >You only need to install the dependencies for the languages you're using
 
-- JS/TS
-  - [bun](https://bun.sh)
+- JS
+  - built-in ([thanks to the v8go package](github.com/rogchap/v8go/))
 - Java
   - [java](https://java.com) (tested with jdk-23)
 - Bash
