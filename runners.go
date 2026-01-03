@@ -7,6 +7,8 @@ import (
 	"bytes"
 	"slices"
 	"os/exec"
+	"strings"
+	v8 "rogchap.com/v8go"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
 	"github.com/Supraboy981322/gomn"
@@ -143,4 +145,52 @@ func vimRunner(opts RunOpts) (string, string, error) {
 	}
 
 	return stdout, stderr, nil
+}
+
+func jsRunner(opts RunOpts) (string, string, error) {
+	jsIso := v8.NewIsolate()
+	defer jsIso.Dispose()
+
+	type jsConsole struct {
+		stdout string
+		stderr string
+	};con := new(jsConsole)
+
+	jsConsoleObj := v8.NewObjectTemplate(jsIso)
+	printFunc := v8.NewFunctionTemplate(jsIso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+		var p []string
+		for _, a := range info.Args() {
+			p = append(p, a.String())
+		}
+		con.stdout += strings.Join(p, " ")+"\n"
+		return nil
+	})
+	errorFunc := v8.NewFunctionTemplate(jsIso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+		p := []string{"[js-error]:"}
+		for _, a := range info.Args() {
+			p = append(p, a.String())
+		}
+		con.stderr += strings.Join(p, " ")+"\n"
+		return nil
+	})
+	logFunc := v8.NewFunctionTemplate(jsIso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+		p := []string{"[js-log]:"}
+		for _, a := range info.Args() {
+			p = append(p, a.String())
+		}
+		con.stderr += strings.Join(p, " ")+"\n"
+		return nil
+	})
+	_ = jsConsoleObj.Set("print", printFunc)
+	_ = jsConsoleObj.Set("error", errorFunc)
+	_ = jsConsoleObj.Set("log", logFunc)
+
+
+	jsGlobal := v8.NewObjectTemplate(jsIso)
+	jsGlobal.Set("elh", jsConsoleObj)
+	jsCtx := v8.NewContext(jsIso, jsGlobal)
+	defer jsCtx.Close()
+
+	_, err := jsCtx.RunScript(opts.Code, "foo.js")
+	return con.stdout, con.stderr, err
 }
