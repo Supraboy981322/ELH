@@ -43,18 +43,20 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 
 - JS
   - built-in ([thanks to the v8go package](github.com/rogchap/v8go/))
-- Java
-  - [java](https://java.com) (tested with jdk-23)
-- Bash
-  - [bash](https://gnu.org/software/bash/)
 - Shell
   - Built-in ([thanks to the sh package by mvdan](github.com/mvdan/sh))
-- Python
-  - [python3](https://python.org/)
 - Markdown
   - built-in ([thanks to the gomarkdown package](github.com/gomarkdown/markdown))
 - Lua
   - built-in ([thanks to the Shopify go-lua package](github.com/Shopify/go-lua))
+- gomn (parser)
+  - built-in ([thanks to the gomn package](https://github.com/Supraboy981322/gomn))
+- Python
+  - [python3](https://python.org/)
+- Java
+  - [java](https://java.com) (tested with jdk-23)
+- Bash
+  - [bash](https://gnu.org/software/bash/)
 - Brainfuck
   - beef
 - Go
@@ -71,8 +73,6 @@ Freely embed various programming languages into HTML; like PHP, but without bein
   - bwbasic
 - VimScript
   - [Vim](https://github.com/vim/vim/)
-- gomn (parser)
-  - built-in ([thanks to the gomn package](https://github.com/Supraboy981322/gomn))
 
 ---
 
