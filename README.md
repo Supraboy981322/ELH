@@ -42,13 +42,13 @@ Freely embed various programming languages into HTML; like PHP, but without bein
 >You only need to install the dependencies for the languages you're using
 
 - JS
-  - built-in ([thanks to the v8go package](github.com/rogchap/v8go/))
+  - built-in ([thanks to the v8go package](https://github.com/rogchap/v8go/))
 - Shell
-  - Built-in ([thanks to the sh package by mvdan](github.com/mvdan/sh))
+  - Built-in ([thanks to the sh package by mvdan](https://github.com/mvdan/sh))
 - Markdown
-  - built-in ([thanks to the gomarkdown package](github.com/gomarkdown/markdown))
+  - built-in ([thanks to the gomarkdown package](https://github.com/gomarkdown/markdown))
 - Lua
-  - built-in ([thanks to the Shopify go-lua package](github.com/Shopify/go-lua))
+  - built-in ([thanks to the Shopify go-lua package](https://github.com/Shopify/go-lua))
 - gomn (parser)
   - built-in ([thanks to the gomn package](https://github.com/Supraboy981322/gomn))
 - Python
