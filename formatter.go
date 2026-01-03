@@ -62,8 +62,9 @@ func formatCode(code string, lang string, tmpName string, tmpDir string) string 
 		}
 		code = code + "\nqall!"
 	case "bash":
+		os.Stdout.Write([]byte("formatCode() "+tmpDir+"\n"))
 		head := `
-source `+filepath.Join(tmpDir, "elhLib.bash")+"\n"
+source '`+filepath.Join(tmpDir, "elhLib.bash'")+"\n"
 		code = head + code
 	default:
 	}
@@ -163,6 +164,7 @@ elhlog() (
 )
 `)
 		libName := filepath.Join(tmpDir, "elhLib.bash")
+		os.Stdout.WriteString("genLib() "+libName+"\n")
 		err := os.WriteFile(libName, libCont, 0644)
 		if err != nil {
 			return err

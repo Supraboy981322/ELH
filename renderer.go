@@ -205,11 +205,12 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr h
 			_, _, ret := errRun("create temporary file", err)
 			return "", ret
 		}
-		
+	
+		fmt.Println("before prep{"+tmpDir+"}")
 		tmp := prepForLangsWithOddReqs(lang, tmpDir)
-
+		fmt.Println("after prep{"+tmp.Name()+"}")
 		code = formatCode(code, lang, tmp.Name(), tmpDir)
-
+		
 		api := BldApiStruct(req, wr)
 		runOpts := RunOpts{
 			Code: code,
@@ -224,6 +225,9 @@ func parseAndRun(src string, registry map[string]Runner, req *http.Request, wr h
 		stdout, stderr, err := r.Run(runOpts)
 		if err != nil {
 			return "", fmt.Errorf("runner %s failed: %w; stderr=%s", lang, err, stderr)
+		}
+		if Server.Log.Runner.LogStderr {
+			sysout.WriteString(stderr)
 		}
 
 		stdout = formatSTD(lang, stdout)
@@ -259,6 +263,7 @@ func prepForLangsWithOddReqs(lang string, tmpDir string) *os.File {
 	default:
 		fileName := fmt.Sprintf(filepath.Base(tmpDir))
 		file, err := os.Create(filepath.Join(tmpDir, fileName))
+		os.Stdout.WriteString(file.Name()+"\n")
 		if err != nil {
 			if Server.Log.Func != nil {
 				errStr := fmt.Sprintf("%v", err)
