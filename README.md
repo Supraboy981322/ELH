@@ -47,6 +47,8 @@ Freely embed various programming languages into HTML; like PHP, but without bein
   - [java](https://java.com) (tested with jdk-23)
 - Bash
   - [bash](https://gnu.org/software/bash/)
+- Shell
+  - Built-in ([thanks to the sh package by mvdan](github.com/mvdan/sh))
 - Python
   - [python3](https://python.org/)
 - Markdown
