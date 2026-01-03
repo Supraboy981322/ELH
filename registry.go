@@ -14,10 +14,8 @@ func DefaultRegistry() map[string]Runner {
 			Env:     os.Environ(),
 		},
 		"js": &ExternalRunner{
-			CmdName: "bun",
-			Args:    []string{},
+			Func: jsRunner,
 			Timeout: 5 * time.Second,
-			Env:     os.Environ(),
 		},
 		"bash": &ExternalRunner{
 			CmdName: "bash",
