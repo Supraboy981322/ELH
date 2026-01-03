@@ -8,10 +8,13 @@ import (
 	"slices"
 	"os/exec"
 	"strings"
+	"context"
 	v8 "rogchap.com/v8go"
 	"github.com/Shopify/go-lua"
 	"github.com/gomarkdown/markdown"
 	"github.com/Supraboy981322/gomn"
+	shInterp "mvdan.cc/sh/v3/interp"
+	shSyntax "mvdan.cc/sh/v3/syntax"
 )
 
 func mdRunner(opts RunOpts) (string, string, error) {
@@ -193,4 +196,20 @@ func jsRunner(opts RunOpts) (string, string, error) {
 
 	_, err := jsCtx.RunScript(opts.Code, "foo.js")
 	return con.stdout, con.stderr, err
+}
+
+func shRunner(opts RunOpts) (string, string, error) {
+	scriptReader := strings.NewReader(opts.Code)
+	p, err := shSyntax.NewParser().Parse(scriptReader, "")
+	if err != nil { return "", "", err }
+
+	var stdout, stderr bytes.Buffer
+	r, err := shInterp.New(
+			shInterp.StdIO(nil, &stdout, &stderr),
+			shInterp.ExecHandler(shInterp.DefaultExecHandler(0)),
+		)
+	if err != nil { return "", "", err }
+
+	err = r.Run(context.Background(), p)
+	return stdout.String(), stderr.String(), nil
 }

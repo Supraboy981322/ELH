@@ -91,6 +91,10 @@ func DefaultRegistry() map[string]Runner {
 			Timeout: 5 * time.Second,
 			Func: elhRunner,
 		},
+		"sh": &ExternalRunner{
+			Timeout: 5 * time.Second,
+			Func: shRunner,
+		},
 	}
 }
 
